@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyanx"
+version = "0.3.0"
+description = "API for generating IBM i2 Analyst's Notebook (ANB) ANX chart files."
+readme = "README.md"
+requires-python = ">=3.7"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Petter Chr. Bjelland", email = "petter.bjelland@gmail.com" }]
+keywords = ["i2", "analysts-notebook", "anx", "link-analysis", "graph", "visualization"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Visualization",
+]
+dependencies = []
+
+[project.optional-dependencies]
+networkx = ["networkx>=2.0"]
+dev = ["pytest>=7.0", "networkx>=2.0"]
+
+[project.scripts]
+pyanx = "pyanx.__main__:main"
+
+[project.urls]
+Homepage = "https://github.com/MLResearch42/python_anb"
+Repository = "https://github.com/MLResearch42/python_anb"
+
+[tool.setuptools]
+packages = ["pyanx"]
+
+[tool.pytest.ini_options]
+testpaths = ["test"]
