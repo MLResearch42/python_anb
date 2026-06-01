@@ -13,7 +13,7 @@ the License.
 
 import random
 
-import anx
+from . import anx
 import datetime
 
 __author__ = 'Petter Chr. Bjelland (petter.bjelland@gmail.com)'

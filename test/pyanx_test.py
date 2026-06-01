@@ -43,50 +43,51 @@ class PyanxUnitTest(unittest.TestCase):
   def test_EntityTypes(self):
     entity_types = self.parsed_chart.get_EntityTypeCollection()[0].get_EntityType()
 
-    self.assertEquals(2, len(entity_types))
-    self.assertEquals("Person", entity_types[0].get_Name())
-    self.assertEquals("Woman", entity_types[1].get_Name())
+    self.assertEqual(2, len(entity_types))
+    self.assertEqual("Person", entity_types[0].get_Name())
+    self.assertEqual("Woman", entity_types[1].get_Name())
 
   def test_LinkTypes(self):
     link_types = self.parsed_chart.get_LinkTypeCollection()[0].get_LinkType()
 
-    self.assertEquals(1, len(link_types))
-    self.assertEquals("Link", link_types[0].get_Name())
+    self.assertEqual(1, len(link_types))
+    self.assertEqual("Link", link_types[0].get_Name())
 
   def test_ChartItemCount(self):
     chart_items = self.parsed_chart.get_ChartItemCollection()[0].get_ChartItem()
 
-    self.assertEquals(4, len(chart_items))
+    self.assertEqual(4, len(chart_items))
 
   def test_ChartItemNodes(self):
     chart_items = self.parsed_chart.get_ChartItemCollection()[0].get_ChartItem()
 
-    self.assertEquals('Tywin', chart_items[0].get_Label())
-    self.assertEquals('Person', chart_items[0].get_End().get_Entity().get_Icon().get_IconStyle().get_Type())
+    # Nodes are emitted in insertion order (dicts preserve order on Python 3.7+).
+    self.assertEqual('Tyrion', chart_items[0].get_Label())
+    self.assertEqual('Person', chart_items[0].get_End().get_Entity().get_Icon().get_IconStyle().get_Type())
 
-    self.assertEquals('Jaime', chart_items[1].get_Label())
-    self.assertEquals('Person', chart_items[1].get_End().get_Entity().get_Icon().get_IconStyle().get_Type())
+    self.assertEqual('Tywin', chart_items[1].get_Label())
+    self.assertEqual('Person', chart_items[1].get_End().get_Entity().get_Icon().get_IconStyle().get_Type())
 
-    self.assertEquals('Cersei', chart_items[2].get_Label())
-    self.assertEquals('Woman', chart_items[2].get_End().get_Entity().get_Icon().get_IconStyle().get_Type())
+    self.assertEqual('Jaime', chart_items[2].get_Label())
+    self.assertEqual('Person', chart_items[2].get_End().get_Entity().get_Icon().get_IconStyle().get_Type())
 
-    self.assertEquals('Tyrion', chart_items[3].get_Label())
-    self.assertEquals('Person', chart_items[3].get_End().get_Entity().get_Icon().get_IconStyle().get_Type())
+    self.assertEqual('Cersei', chart_items[3].get_Label())
+    self.assertEqual('Woman', chart_items[3].get_End().get_Entity().get_Icon().get_IconStyle().get_Type())
 
   def test_ChartItemEdges(self):
     chart_items = self.parsed_chart.get_ChartItemCollection()[1].get_ChartItem()
 
-    self.assertEquals('Father of', chart_items[0].get_Label())
-    self.assertEquals('Tywin', chart_items[0].get_Link().get_End1Id())
-    self.assertEquals('Tyrion', chart_items[0].get_Link().get_End2Id())
+    self.assertEqual('Father of', chart_items[0].get_Label())
+    self.assertEqual('Tywin', chart_items[0].get_Link().get_End1Id())
+    self.assertEqual('Tyrion', chart_items[0].get_Link().get_End2Id())
 
-    self.assertEquals('Brother of', chart_items[1].get_Label())
-    self.assertEquals('Jaime', chart_items[1].get_Link().get_End1Id())
-    self.assertEquals('Tyrion', chart_items[1].get_Link().get_End2Id())
+    self.assertEqual('Brother of', chart_items[1].get_Label())
+    self.assertEqual('Jaime', chart_items[1].get_Link().get_End1Id())
+    self.assertEqual('Tyrion', chart_items[1].get_Link().get_End2Id())
 
-    self.assertEquals('Sister of', chart_items[2].get_Label())
-    self.assertEquals('Cersei', chart_items[2].get_Link().get_End1Id())
-    self.assertEquals('Tyrion', chart_items[2].get_Link().get_End2Id())
+    self.assertEqual('Sister of', chart_items[2].get_Label())
+    self.assertEqual('Cersei', chart_items[2].get_Link().get_End1Id())
+    self.assertEqual('Tyrion', chart_items[2].get_Link().get_End2Id())
 
 if __name__ == '__main__':
   unittest.main()

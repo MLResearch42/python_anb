@@ -87,7 +87,7 @@ def parsexml_(*args, **kwargs):
 
 try:
     from generatedssuper import GeneratedsSuper
-except ImportError, exp:
+except ImportError as exp:
 
     class GeneratedsSuper(object):
         tzoff_pattern = re_.compile(r'(\+|-)((0\d|1[0-3]):[0-5]\d|14:00)$')
@@ -363,7 +363,7 @@ except ImportError, exp:
             return None
         @classmethod
         def gds_reverse_node_mapping(cls, mapping):
-            return dict(((v, k) for k, v in mapping.iteritems()))
+            return dict(((v, k) for k, v in mapping.items()))
 
 
 #
@@ -404,7 +404,7 @@ def showIndent(outfile, level, pretty_print=True):
 def quote_xml(inStr):
     if not inStr:
         return ''
-    s1 = (isinstance(inStr, basestring) and inStr or
+    s1 = (isinstance(inStr, str) and inStr or
           '%s' % inStr)
     s1 = s1.replace('&', '&amp;')
     s1 = s1.replace('<', '&lt;')
@@ -413,7 +413,7 @@ def quote_xml(inStr):
 
 
 def quote_attrib(inStr):
-    s1 = (isinstance(inStr, basestring) and inStr or
+    s1 = (isinstance(inStr, str) and inStr or
           '%s' % inStr)
     s1 = s1.replace('&', '&amp;')
     s1 = s1.replace('<', '&lt;')
@@ -728,28 +728,28 @@ class ApplicationVersion(GeneratedsSuper):
             already_processed.add('Major')
             try:
                 self.Major = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Build', node)
         if value is not None and 'Build' not in already_processed:
             already_processed.add('Build')
             try:
                 self.Build = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Minor', node)
         if value is not None and 'Minor' not in already_processed:
             already_processed.add('Minor')
             try:
                 self.Minor = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Point', node)
         if value is not None and 'Point' not in already_processed:
             already_processed.add('Point')
             try:
                 self.Point = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -815,13 +815,13 @@ class Attribute(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Attribute'):
         if self.AttributeClassReference is not None and 'AttributeClassReference' not in already_processed:
             already_processed.add('AttributeClassReference')
-            outfile.write(' AttributeClassReference=%s' % (self.gds_format_string(quote_attrib(self.AttributeClassReference).encode(ExternalEncoding), input_name='AttributeClassReference'), ))
+            outfile.write(' AttributeClassReference=%s' % (self.gds_format_string(quote_attrib(self.AttributeClassReference), input_name='AttributeClassReference'), ))
         if self.Value is not None and 'Value' not in already_processed:
             already_processed.add('Value')
             outfile.write(' Value=%s' % (quote_attrib(self.Value), ))
         if self.AttributeClass is not None and 'AttributeClass' not in already_processed:
             already_processed.add('AttributeClass')
-            outfile.write(' AttributeClass=%s' % (self.gds_format_string(quote_attrib(self.AttributeClass).encode(ExternalEncoding), input_name='AttributeClass'), ))
+            outfile.write(' AttributeClass=%s' % (self.gds_format_string(quote_attrib(self.AttributeClass), input_name='AttributeClass'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='Attribute', fromsubclass_=False, pretty_print=True):
         pass
     def exportLiteral(self, outfile, level, name_='Attribute'):
@@ -1054,13 +1054,13 @@ class AttributeClass(GeneratedsSuper):
             outfile.write(' SemanticTypeGuid=%s' % (quote_attrib(self.SemanticTypeGuid), ))
         if self.IconFile is not None and 'IconFile' not in already_processed:
             already_processed.add('IconFile')
-            outfile.write(' IconFile=%s' % (self.gds_format_string(quote_attrib(self.IconFile).encode(ExternalEncoding), input_name='IconFile'), ))
+            outfile.write(' IconFile=%s' % (self.gds_format_string(quote_attrib(self.IconFile), input_name='IconFile'), ))
         if self.ShowValue is not None and 'ShowValue' not in already_processed:
             already_processed.add('ShowValue')
             outfile.write(' ShowValue="%s"' % self.gds_format_boolean(self.ShowValue, input_name='ShowValue'))
         if self.Name is not None and 'Name' not in already_processed:
             already_processed.add('Name')
-            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name).encode(ExternalEncoding), input_name='Name'), ))
+            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name), input_name='Name'), ))
         if self.UserCanAdd is not None and 'UserCanAdd' not in already_processed:
             already_processed.add('UserCanAdd')
             outfile.write(' UserCanAdd="%s"' % self.gds_format_boolean(self.UserCanAdd, input_name='UserCanAdd'))
@@ -1072,13 +1072,13 @@ class AttributeClass(GeneratedsSuper):
             outfile.write(' ShowClassName="%s"' % self.gds_format_boolean(self.ShowClassName, input_name='ShowClassName'))
         if self.Suffix is not None and 'Suffix' not in already_processed:
             already_processed.add('Suffix')
-            outfile.write(' Suffix=%s' % (self.gds_format_string(quote_attrib(self.Suffix).encode(ExternalEncoding), input_name='Suffix'), ))
+            outfile.write(' Suffix=%s' % (self.gds_format_string(quote_attrib(self.Suffix), input_name='Suffix'), ))
         if self.Visible is not None and 'Visible' not in already_processed:
             already_processed.add('Visible')
             outfile.write(' Visible="%s"' % self.gds_format_boolean(self.Visible, input_name='Visible'))
         if self.Prefix is not None and 'Prefix' not in already_processed:
             already_processed.add('Prefix')
-            outfile.write(' Prefix=%s' % (self.gds_format_string(quote_attrib(self.Prefix).encode(ExternalEncoding), input_name='Prefix'), ))
+            outfile.write(' Prefix=%s' % (self.gds_format_string(quote_attrib(self.Prefix), input_name='Prefix'), ))
         if self.UserCanRemove is not None and 'UserCanRemove' not in already_processed:
             already_processed.add('UserCanRemove')
             outfile.write(' UserCanRemove="%s"' % self.gds_format_boolean(self.UserCanRemove, input_name='UserCanRemove'))
@@ -1093,7 +1093,7 @@ class AttributeClass(GeneratedsSuper):
             outfile.write(' MergeBehaviour=%s' % (quote_attrib(self.MergeBehaviour), ))
         if self.Id is not None and 'Id' not in already_processed:
             already_processed.add('Id')
-            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id).encode(ExternalEncoding), input_name='Id'), ))
+            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id), input_name='Id'), ))
         if self.ShowDate is not None and 'ShowDate' not in already_processed:
             already_processed.add('ShowDate')
             outfile.write(' ShowDate="%s"' % self.gds_format_boolean(self.ShowDate, input_name='ShowDate'))
@@ -1367,7 +1367,7 @@ class AttributeClass(GeneratedsSuper):
             already_processed.add('DecimalPlaces')
             try:
                 self.DecimalPlaces = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('MergeBehaviour', node)
         if value is not None and 'MergeBehaviour' not in already_processed:
@@ -1550,13 +1550,13 @@ class AttributeClassEntry(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='AttributeClassEntry'):
         if self.AttributeClassReference is not None and 'AttributeClassReference' not in already_processed:
             already_processed.add('AttributeClassReference')
-            outfile.write(' AttributeClassReference=%s' % (self.gds_format_string(quote_attrib(self.AttributeClassReference).encode(ExternalEncoding), input_name='AttributeClassReference'), ))
+            outfile.write(' AttributeClassReference=%s' % (self.gds_format_string(quote_attrib(self.AttributeClassReference), input_name='AttributeClassReference'), ))
         if self.Value is not None and 'Value' not in already_processed:
             already_processed.add('Value')
             outfile.write(' Value=%s' % (quote_attrib(self.Value), ))
         if self.AttributeClass is not None and 'AttributeClass' not in already_processed:
             already_processed.add('AttributeClass')
-            outfile.write(' AttributeClass=%s' % (self.gds_format_string(quote_attrib(self.AttributeClass).encode(ExternalEncoding), input_name='AttributeClass'), ))
+            outfile.write(' AttributeClass=%s' % (self.gds_format_string(quote_attrib(self.AttributeClass), input_name='AttributeClass'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='AttributeClassEntry', fromsubclass_=False, pretty_print=True):
         pass
     def exportLiteral(self, outfile, level, name_='AttributeClassEntry'):
@@ -2016,35 +2016,35 @@ class Box(GeneratedsSuper):
             already_processed.add('Width')
             try:
                 self.Width = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Depth', node)
         if value is not None and 'Depth' not in already_processed:
             already_processed.add('Depth')
             try:
                 self.Depth = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('TextY', node)
         if value is not None and 'TextY' not in already_processed:
             already_processed.add('TextY')
             try:
                 self.TextY = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('TextX', node)
         if value is not None and 'TextX' not in already_processed:
             already_processed.add('TextX')
             try:
                 self.TextX = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Height', node)
         if value is not None and 'Height' not in already_processed:
             already_processed.add('Height')
             try:
                 self.Height = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'BoxStyle':
@@ -2135,13 +2135,13 @@ class BoxStyle(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='BoxStyle'):
         if self.Strength is not None and 'Strength' not in already_processed:
             already_processed.add('Strength')
-            outfile.write(' Strength=%s' % (self.gds_format_string(quote_attrib(self.Strength).encode(ExternalEncoding), input_name='Strength'), ))
+            outfile.write(' Strength=%s' % (self.gds_format_string(quote_attrib(self.Strength), input_name='Strength'), ))
         if self.StrengthReference is not None and 'StrengthReference' not in already_processed:
             already_processed.add('StrengthReference')
-            outfile.write(' StrengthReference=%s' % (self.gds_format_string(quote_attrib(self.StrengthReference).encode(ExternalEncoding), input_name='StrengthReference'), ))
+            outfile.write(' StrengthReference=%s' % (self.gds_format_string(quote_attrib(self.StrengthReference), input_name='StrengthReference'), ))
         if self.EntityTypeReference is not None and 'EntityTypeReference' not in already_processed:
             already_processed.add('EntityTypeReference')
-            outfile.write(' EntityTypeReference=%s' % (self.gds_format_string(quote_attrib(self.EntityTypeReference).encode(ExternalEncoding), input_name='EntityTypeReference'), ))
+            outfile.write(' EntityTypeReference=%s' % (self.gds_format_string(quote_attrib(self.EntityTypeReference), input_name='EntityTypeReference'), ))
         if self.FillStyle is not None and 'FillStyle' not in already_processed:
             already_processed.add('FillStyle')
             outfile.write(' FillStyle=%s' % (quote_attrib(self.FillStyle), ))
@@ -2156,7 +2156,7 @@ class BoxStyle(GeneratedsSuper):
             outfile.write(' LineWidth="%s"' % self.gds_format_integer(self.LineWidth, input_name='LineWidth'))
         if self.Type is not None and 'Type' not in already_processed:
             already_processed.add('Type')
-            outfile.write(' Type=%s' % (self.gds_format_string(quote_attrib(self.Type).encode(ExternalEncoding), input_name='Type'), ))
+            outfile.write(' Type=%s' % (self.gds_format_string(quote_attrib(self.Type), input_name='Type'), ))
         if self.Filled is not None and 'Filled' not in already_processed:
             already_processed.add('Filled')
             outfile.write(' Filled="%s"' % self.gds_format_boolean(self.Filled, input_name='Filled'))
@@ -2237,21 +2237,21 @@ class BoxStyle(GeneratedsSuper):
             already_processed.add('LineColour')
             try:
                 self.LineColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('BackColour', node)
         if value is not None and 'BackColour' not in already_processed:
             already_processed.add('BackColour')
             try:
                 self.BackColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('LineWidth', node)
         if value is not None and 'LineWidth' not in already_processed:
             already_processed.add('LineWidth')
             try:
                 self.LineWidth = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Type', node)
         if value is not None and 'Type' not in already_processed:
@@ -2303,7 +2303,7 @@ class Card(GeneratedsSuper):
         self.Text = _cast(None, Text)
         self.GradeTwoIndex = _cast(int, GradeTwoIndex)
         self.GradeThreeReference = _cast(None, GradeThreeReference)
-        if isinstance(DateTime, basestring):
+        if isinstance(DateTime, str):
             initvalue_ = datetime_.datetime.strptime(DateTime, '%Y-%m-%dT%H:%M:%S')
         else:
             initvalue_ = DateTime
@@ -2393,37 +2393,37 @@ class Card(GeneratedsSuper):
             outfile.write(' GradeOneIndex="%s"' % self.gds_format_integer(self.GradeOneIndex, input_name='GradeOneIndex'))
         if self.GradeTwoReference is not None and 'GradeTwoReference' not in already_processed:
             already_processed.add('GradeTwoReference')
-            outfile.write(' GradeTwoReference=%s' % (self.gds_format_string(quote_attrib(self.GradeTwoReference).encode(ExternalEncoding), input_name='GradeTwoReference'), ))
+            outfile.write(' GradeTwoReference=%s' % (self.gds_format_string(quote_attrib(self.GradeTwoReference), input_name='GradeTwoReference'), ))
         if self.Text is not None and 'Text' not in already_processed:
             already_processed.add('Text')
-            outfile.write(' Text=%s' % (self.gds_format_string(quote_attrib(self.Text).encode(ExternalEncoding), input_name='Text'), ))
+            outfile.write(' Text=%s' % (self.gds_format_string(quote_attrib(self.Text), input_name='Text'), ))
         if self.GradeTwoIndex is not None and 'GradeTwoIndex' not in already_processed:
             already_processed.add('GradeTwoIndex')
             outfile.write(' GradeTwoIndex="%s"' % self.gds_format_integer(self.GradeTwoIndex, input_name='GradeTwoIndex'))
         if self.GradeThreeReference is not None and 'GradeThreeReference' not in already_processed:
             already_processed.add('GradeThreeReference')
-            outfile.write(' GradeThreeReference=%s' % (self.gds_format_string(quote_attrib(self.GradeThreeReference).encode(ExternalEncoding), input_name='GradeThreeReference'), ))
+            outfile.write(' GradeThreeReference=%s' % (self.gds_format_string(quote_attrib(self.GradeThreeReference), input_name='GradeThreeReference'), ))
         if self.DateTime is not None and 'DateTime' not in already_processed:
             already_processed.add('DateTime')
             outfile.write(' DateTime="%s"' % self.gds_format_datetime(self.DateTime, input_name='DateTime'))
         if self.DateTimeDescription is not None and 'DateTimeDescription' not in already_processed:
             already_processed.add('DateTimeDescription')
-            outfile.write(' DateTimeDescription=%s' % (self.gds_format_string(quote_attrib(self.DateTimeDescription).encode(ExternalEncoding), input_name='DateTimeDescription'), ))
+            outfile.write(' DateTimeDescription=%s' % (self.gds_format_string(quote_attrib(self.DateTimeDescription), input_name='DateTimeDescription'), ))
         if self.SourceReference is not None and 'SourceReference' not in already_processed:
             already_processed.add('SourceReference')
-            outfile.write(' SourceReference=%s' % (self.gds_format_string(quote_attrib(self.SourceReference).encode(ExternalEncoding), input_name='SourceReference'), ))
+            outfile.write(' SourceReference=%s' % (self.gds_format_string(quote_attrib(self.SourceReference), input_name='SourceReference'), ))
         if self.SourceType is not None and 'SourceType' not in already_processed:
             already_processed.add('SourceType')
-            outfile.write(' SourceType=%s' % (self.gds_format_string(quote_attrib(self.SourceType).encode(ExternalEncoding), input_name='SourceType'), ))
+            outfile.write(' SourceType=%s' % (self.gds_format_string(quote_attrib(self.SourceType), input_name='SourceType'), ))
         if self.GradeThreeIndex is not None and 'GradeThreeIndex' not in already_processed:
             already_processed.add('GradeThreeIndex')
             outfile.write(' GradeThreeIndex="%s"' % self.gds_format_integer(self.GradeThreeIndex, input_name='GradeThreeIndex'))
         if self.Summary is not None and 'Summary' not in already_processed:
             already_processed.add('Summary')
-            outfile.write(' Summary=%s' % (self.gds_format_string(quote_attrib(self.Summary).encode(ExternalEncoding), input_name='Summary'), ))
+            outfile.write(' Summary=%s' % (self.gds_format_string(quote_attrib(self.Summary), input_name='Summary'), ))
         if self.GradeOneReference is not None and 'GradeOneReference' not in already_processed:
             already_processed.add('GradeOneReference')
-            outfile.write(' GradeOneReference=%s' % (self.gds_format_string(quote_attrib(self.GradeOneReference).encode(ExternalEncoding), input_name='GradeOneReference'), ))
+            outfile.write(' GradeOneReference=%s' % (self.gds_format_string(quote_attrib(self.GradeOneReference), input_name='GradeOneReference'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='Card', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -2518,7 +2518,7 @@ class Card(GeneratedsSuper):
             already_processed.add('LocalDateTimeOffset')
             try:
                 self.LocalDateTimeOffset = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('TimeSet', node)
         if value is not None and 'TimeSet' not in already_processed:
@@ -2543,7 +2543,7 @@ class Card(GeneratedsSuper):
             already_processed.add('GradeOneIndex')
             try:
                 self.GradeOneIndex = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('GradeTwoReference', node)
         if value is not None and 'GradeTwoReference' not in already_processed:
@@ -2558,7 +2558,7 @@ class Card(GeneratedsSuper):
             already_processed.add('GradeTwoIndex')
             try:
                 self.GradeTwoIndex = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('GradeThreeReference', node)
         if value is not None and 'GradeThreeReference' not in already_processed:
@@ -2569,7 +2569,7 @@ class Card(GeneratedsSuper):
             already_processed.add('DateTime')
             try:
                 self.DateTime = self.gds_parse_datetime(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad date-time attribute (DateTime): %s' % exp)
         value = find_attr_value_('DateTimeDescription', node)
         if value is not None and 'DateTimeDescription' not in already_processed:
@@ -2588,7 +2588,7 @@ class Card(GeneratedsSuper):
             already_processed.add('GradeThreeIndex')
             try:
                 self.GradeThreeIndex = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Summary', node)
         if value is not None and 'Summary' not in already_processed:
@@ -2849,13 +2849,13 @@ class CustomImage(GeneratedsSuper):
             outfile.write(' Data=%s' % (quote_attrib(self.Data), ))
         if self.Id is not None and 'Id' not in already_processed:
             already_processed.add('Id')
-            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id).encode(ExternalEncoding), input_name='Id'), ))
+            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id), input_name='Id'), ))
         if self.DataLength is not None and 'DataLength' not in already_processed:
             already_processed.add('DataLength')
             outfile.write(' DataLength="%s"' % self.gds_format_integer(self.DataLength, input_name='DataLength'))
         if self.DataGuid is not None and 'DataGuid' not in already_processed:
             already_processed.add('DataGuid')
-            outfile.write(' DataGuid=%s' % (self.gds_format_string(quote_attrib(self.DataGuid).encode(ExternalEncoding), input_name='DataGuid'), ))
+            outfile.write(' DataGuid=%s' % (self.gds_format_string(quote_attrib(self.DataGuid), input_name='DataGuid'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='CustomImage', fromsubclass_=False, pretty_print=True):
         pass
     def exportLiteral(self, outfile, level, name_='CustomImage'):
@@ -2904,7 +2904,7 @@ class CustomImage(GeneratedsSuper):
             already_processed.add('DataLength')
             try:
                 self.DataLength = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('DataGuid', node)
         if value is not None and 'DataGuid' not in already_processed:
@@ -3059,7 +3059,7 @@ class PropertyBag(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='PropertyBag'):
         if self.GuidID is not None and 'GuidID' not in already_processed:
             already_processed.add('GuidID')
-            outfile.write(' GuidID=%s' % (self.gds_format_string(quote_attrib(self.GuidID).encode(ExternalEncoding), input_name='GuidID'), ))
+            outfile.write(' GuidID=%s' % (self.gds_format_string(quote_attrib(self.GuidID), input_name='GuidID'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='PropertyBag', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -3181,16 +3181,16 @@ class PropertyBagProperty(GeneratedsSuper):
             outfile.write(' DataType=%s' % (quote_attrib(self.DataType), ))
         if self.PropertyName is not None and 'PropertyName' not in already_processed:
             already_processed.add('PropertyName')
-            outfile.write(' PropertyName=%s' % (self.gds_format_string(quote_attrib(self.PropertyName).encode(ExternalEncoding), input_name='PropertyName'), ))
+            outfile.write(' PropertyName=%s' % (self.gds_format_string(quote_attrib(self.PropertyName), input_name='PropertyName'), ))
         if self.DataGuid is not None and 'DataGuid' not in already_processed:
             already_processed.add('DataGuid')
-            outfile.write(' DataGuid=%s' % (self.gds_format_string(quote_attrib(self.DataGuid).encode(ExternalEncoding), input_name='DataGuid'), ))
+            outfile.write(' DataGuid=%s' % (self.gds_format_string(quote_attrib(self.DataGuid), input_name='DataGuid'), ))
         if self.DataLength is not None and 'DataLength' not in already_processed:
             already_processed.add('DataLength')
             outfile.write(' DataLength="%s"' % self.gds_format_integer(self.DataLength, input_name='DataLength'))
         if self.Data is not None and 'Data' not in already_processed:
             already_processed.add('Data')
-            outfile.write(' Data=%s' % (self.gds_format_string(quote_attrib(self.Data).encode(ExternalEncoding), input_name='Data'), ))
+            outfile.write(' Data=%s' % (self.gds_format_string(quote_attrib(self.Data), input_name='Data'), ))
         if self.ValueIsIDispatch is not None and 'ValueIsIDispatch' not in already_processed:
             already_processed.add('ValueIsIDispatch')
             outfile.write(' ValueIsIDispatch="%s"' % self.gds_format_boolean(self.ValueIsIDispatch, input_name='ValueIsIDispatch'))
@@ -3255,7 +3255,7 @@ class PropertyBagProperty(GeneratedsSuper):
             already_processed.add('DataLength')
             try:
                 self.DataLength = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Data', node)
         if value is not None and 'Data' not in already_processed:
@@ -3344,7 +3344,7 @@ class Chart(GeneratedsSuper):
         self.WiringDistanceNear = _cast(float, WiringDistanceNear)
         self.UseWiringHeightForThemeIcon = _cast(bool, UseWiringHeightForThemeIcon)
         self.DefaultTickRate = _cast(float, DefaultTickRate)
-        if isinstance(DefaultDateTimeForNewChart, basestring):
+        if isinstance(DefaultDateTimeForNewChart, str):
             initvalue_ = datetime_.datetime.strptime(DefaultDateTimeForNewChart, '%Y-%m-%dT%H:%M:%S')
         else:
             initvalue_ = DefaultDateTimeForNewChart
@@ -3353,7 +3353,7 @@ class Chart(GeneratedsSuper):
         self.HiddenItemsVisibility = _cast(None, HiddenItemsVisibility)
         self.GridWidthSize = _cast(float, GridWidthSize)
         self.HideMatchingTimeZoneFormat = _cast(bool, HideMatchingTimeZoneFormat)
-        if isinstance(DefaultDate, basestring):
+        if isinstance(DefaultDate, str):
             initvalue_ = datetime_.datetime.strptime(DefaultDate, '%Y-%m-%dT%H:%M:%S')
         else:
             initvalue_ = DefaultDate
@@ -3813,10 +3813,10 @@ class Chart(GeneratedsSuper):
             outfile.write(' Rigorous="%s"' % self.gds_format_boolean(self.Rigorous, input_name='Rigorous'))
         if self.MsxmlVersion is not None and 'MsxmlVersion' not in already_processed:
             already_processed.add('MsxmlVersion')
-            outfile.write(' MsxmlVersion=%s' % (self.gds_format_string(quote_attrib(self.MsxmlVersion).encode(ExternalEncoding), input_name='MsxmlVersion'), ))
+            outfile.write(' MsxmlVersion=%s' % (self.gds_format_string(quote_attrib(self.MsxmlVersion), input_name='MsxmlVersion'), ))
         if self.SchemaVersion is not None and 'SchemaVersion' not in already_processed:
             already_processed.add('SchemaVersion')
-            outfile.write(' SchemaVersion=%s' % (self.gds_format_string(quote_attrib(self.SchemaVersion).encode(ExternalEncoding), input_name='SchemaVersion'), ))
+            outfile.write(' SchemaVersion=%s' % (self.gds_format_string(quote_attrib(self.SchemaVersion), input_name='SchemaVersion'), ))
         if self.CoverSheetShowOnOpen is not None and 'CoverSheetShowOnOpen' not in already_processed:
             already_processed.add('CoverSheetShowOnOpen')
             outfile.write(' CoverSheetShowOnOpen="%s"' % self.gds_format_boolean(self.CoverSheetShowOnOpen, input_name='CoverSheetShowOnOpen'))
@@ -4362,7 +4362,7 @@ class Chart(GeneratedsSuper):
             already_processed.add('GridHeightSize')
             try:
                 self.GridHeightSize = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (GridHeightSize): %s' % exp)
         value = find_attr_value_('UseDefaultLinkSpacingWhenDragging', node)
         if value is not None and 'UseDefaultLinkSpacingWhenDragging' not in already_processed:
@@ -4405,21 +4405,21 @@ class Chart(GeneratedsSuper):
             already_processed.add('BackColour')
             try:
                 self.BackColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('DefaultLinkSpacing', node)
         if value is not None and 'DefaultLinkSpacing' not in already_processed:
             already_processed.add('DefaultLinkSpacing')
             try:
                 self.DefaultLinkSpacing = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (DefaultLinkSpacing): %s' % exp)
         value = find_attr_value_('WiringDistanceNear', node)
         if value is not None and 'WiringDistanceNear' not in already_processed:
             already_processed.add('WiringDistanceNear')
             try:
                 self.WiringDistanceNear = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (WiringDistanceNear): %s' % exp)
         value = find_attr_value_('UseWiringHeightForThemeIcon', node)
         if value is not None and 'UseWiringHeightForThemeIcon' not in already_processed:
@@ -4435,21 +4435,21 @@ class Chart(GeneratedsSuper):
             already_processed.add('DefaultTickRate')
             try:
                 self.DefaultTickRate = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (DefaultTickRate): %s' % exp)
         value = find_attr_value_('DefaultDateTimeForNewChart', node)
         if value is not None and 'DefaultDateTimeForNewChart' not in already_processed:
             already_processed.add('DefaultDateTimeForNewChart')
             try:
                 self.DefaultDateTimeForNewChart = self.gds_parse_datetime(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad date-time attribute (DefaultDateTimeForNewChart): %s' % exp)
         value = find_attr_value_('WiringHeight', node)
         if value is not None and 'WiringHeight' not in already_processed:
             already_processed.add('WiringHeight')
             try:
                 self.WiringHeight = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (WiringHeight): %s' % exp)
         value = find_attr_value_('HiddenItemsVisibility', node)
         if value is not None and 'HiddenItemsVisibility' not in already_processed:
@@ -4461,7 +4461,7 @@ class Chart(GeneratedsSuper):
             already_processed.add('GridWidthSize')
             try:
                 self.GridWidthSize = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (GridWidthSize): %s' % exp)
         value = find_attr_value_('HideMatchingTimeZoneFormat', node)
         if value is not None and 'HideMatchingTimeZoneFormat' not in already_processed:
@@ -4477,7 +4477,7 @@ class Chart(GeneratedsSuper):
             already_processed.add('DefaultDate')
             try:
                 self.DefaultDate = self.gds_parse_datetime(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad date-time attribute (DefaultDate): %s' % exp)
         value = find_attr_value_('TimeBarVisible', node)
         if value is not None and 'TimeBarVisible' not in already_processed:
@@ -4493,7 +4493,7 @@ class Chart(GeneratedsSuper):
             already_processed.add('WiringSpacing')
             try:
                 self.WiringSpacing = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (WiringSpacing): %s' % exp)
         value = find_attr_value_('BlankLinkLabels', node)
         if value is not None and 'BlankLinkLabels' not in already_processed:
@@ -4523,7 +4523,7 @@ class Chart(GeneratedsSuper):
             already_processed.add('WiringDistanceFar')
             try:
                 self.WiringDistanceFar = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (WiringDistanceFar): %s' % exp)
         value = find_attr_value_('IdReferenceLinking', node)
         if value is not None and 'IdReferenceLinking' not in already_processed:
@@ -4786,7 +4786,7 @@ class ChartItem(GeneratedsSuper):
         self.Selected = _cast(bool, Selected)
         self.GradeTwoReference = _cast(None, GradeTwoReference)
         self.GradeThreeReference = _cast(None, GradeThreeReference)
-        if isinstance(DateTime, basestring):
+        if isinstance(DateTime, str):
             initvalue_ = datetime_.datetime.strptime(DateTime, '%Y-%m-%dT%H:%M:%S')
         else:
             initvalue_ = DateTime
@@ -4912,10 +4912,10 @@ class ChartItem(GeneratedsSuper):
             outfile.write(' GradeOneIndex="%s"' % self.gds_format_integer(self.GradeOneIndex, input_name='GradeOneIndex'))
         if self.Description is not None and 'Description' not in already_processed:
             already_processed.add('Description')
-            outfile.write(' Description=%s' % (self.gds_format_string(quote_attrib(self.Description).encode(ExternalEncoding), input_name='Description'), ))
+            outfile.write(' Description=%s' % (self.gds_format_string(quote_attrib(self.Description), input_name='Description'), ))
         if self.GroupReference is not None and 'GroupReference' not in already_processed:
             already_processed.add('GroupReference')
-            outfile.write(' GroupReference=%s' % (self.gds_format_string(quote_attrib(self.GroupReference).encode(ExternalEncoding), input_name='GroupReference'), ))
+            outfile.write(' GroupReference=%s' % (self.gds_format_string(quote_attrib(self.GroupReference), input_name='GroupReference'), ))
         if self.GradeTwoIndex is not None and 'GradeTwoIndex' not in already_processed:
             already_processed.add('GradeTwoIndex')
             outfile.write(' GradeTwoIndex="%s"' % self.gds_format_integer(self.GradeTwoIndex, input_name='GradeTwoIndex'))
@@ -4924,22 +4924,22 @@ class ChartItem(GeneratedsSuper):
             outfile.write(' Selected="%s"' % self.gds_format_boolean(self.Selected, input_name='Selected'))
         if self.GradeTwoReference is not None and 'GradeTwoReference' not in already_processed:
             already_processed.add('GradeTwoReference')
-            outfile.write(' GradeTwoReference=%s' % (self.gds_format_string(quote_attrib(self.GradeTwoReference).encode(ExternalEncoding), input_name='GradeTwoReference'), ))
+            outfile.write(' GradeTwoReference=%s' % (self.gds_format_string(quote_attrib(self.GradeTwoReference), input_name='GradeTwoReference'), ))
         if self.GradeThreeReference is not None and 'GradeThreeReference' not in already_processed:
             already_processed.add('GradeThreeReference')
-            outfile.write(' GradeThreeReference=%s' % (self.gds_format_string(quote_attrib(self.GradeThreeReference).encode(ExternalEncoding), input_name='GradeThreeReference'), ))
+            outfile.write(' GradeThreeReference=%s' % (self.gds_format_string(quote_attrib(self.GradeThreeReference), input_name='GradeThreeReference'), ))
         if self.DateTime is not None and 'DateTime' not in already_processed:
             already_processed.add('DateTime')
             outfile.write(' DateTime="%s"' % self.gds_format_datetime(self.DateTime, input_name='DateTime'))
         if self.DateTimeDescription is not None and 'DateTimeDescription' not in already_processed:
             already_processed.add('DateTimeDescription')
-            outfile.write(' DateTimeDescription=%s' % (self.gds_format_string(quote_attrib(self.DateTimeDescription).encode(ExternalEncoding), input_name='DateTimeDescription'), ))
+            outfile.write(' DateTimeDescription=%s' % (self.gds_format_string(quote_attrib(self.DateTimeDescription), input_name='DateTimeDescription'), ))
         if self.SourceReference is not None and 'SourceReference' not in already_processed:
             already_processed.add('SourceReference')
-            outfile.write(' SourceReference=%s' % (self.gds_format_string(quote_attrib(self.SourceReference).encode(ExternalEncoding), input_name='SourceReference'), ))
+            outfile.write(' SourceReference=%s' % (self.gds_format_string(quote_attrib(self.SourceReference), input_name='SourceReference'), ))
         if self.SourceType is not None and 'SourceType' not in already_processed:
             already_processed.add('SourceType')
-            outfile.write(' SourceType=%s' % (self.gds_format_string(quote_attrib(self.SourceType).encode(ExternalEncoding), input_name='SourceType'), ))
+            outfile.write(' SourceType=%s' % (self.gds_format_string(quote_attrib(self.SourceType), input_name='SourceType'), ))
         if self.GradeThreeIndex is not None and 'GradeThreeIndex' not in already_processed:
             already_processed.add('GradeThreeIndex')
             outfile.write(' GradeThreeIndex="%s"' % self.gds_format_integer(self.GradeThreeIndex, input_name='GradeThreeIndex'))
@@ -4951,16 +4951,16 @@ class ChartItem(GeneratedsSuper):
             outfile.write(' Ordered="%s"' % self.gds_format_boolean(self.Ordered, input_name='Ordered'))
         if self.Label is not None and 'Label' not in already_processed:
             already_processed.add('Label')
-            outfile.write(' Label=%s' % (self.gds_format_string(quote_attrib(self.Label).encode(ExternalEncoding), input_name='Label'), ))
+            outfile.write(' Label=%s' % (self.gds_format_string(quote_attrib(self.Label), input_name='Label'), ))
         if self.XPosition is not None and 'XPosition' not in already_processed:
             already_processed.add('XPosition')
             outfile.write(' XPosition="%s"' % self.gds_format_integer(self.XPosition, input_name='XPosition'))
         if self.Id is not None and 'Id' not in already_processed:
             already_processed.add('Id')
-            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id).encode(ExternalEncoding), input_name='Id'), ))
+            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id), input_name='Id'), ))
         if self.GradeOneReference is not None and 'GradeOneReference' not in already_processed:
             already_processed.add('GradeOneReference')
-            outfile.write(' GradeOneReference=%s' % (self.gds_format_string(quote_attrib(self.GradeOneReference).encode(ExternalEncoding), input_name='GradeOneReference'), ))
+            outfile.write(' GradeOneReference=%s' % (self.gds_format_string(quote_attrib(self.GradeOneReference), input_name='GradeOneReference'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='ChartItem', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -5119,7 +5119,7 @@ class ChartItem(GeneratedsSuper):
             already_processed.add('LocalDateTimeOffset')
             try:
                 self.LocalDateTimeOffset = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Shown', node)
         if value is not None and 'Shown' not in already_processed:
@@ -5144,7 +5144,7 @@ class ChartItem(GeneratedsSuper):
             already_processed.add('GradeOneIndex')
             try:
                 self.GradeOneIndex = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Description', node)
         if value is not None and 'Description' not in already_processed:
@@ -5159,7 +5159,7 @@ class ChartItem(GeneratedsSuper):
             already_processed.add('GradeTwoIndex')
             try:
                 self.GradeTwoIndex = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Selected', node)
         if value is not None and 'Selected' not in already_processed:
@@ -5183,7 +5183,7 @@ class ChartItem(GeneratedsSuper):
             already_processed.add('DateTime')
             try:
                 self.DateTime = self.gds_parse_datetime(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad date-time attribute (DateTime): %s' % exp)
         value = find_attr_value_('DateTimeDescription', node)
         if value is not None and 'DateTimeDescription' not in already_processed:
@@ -5202,7 +5202,7 @@ class ChartItem(GeneratedsSuper):
             already_processed.add('GradeThreeIndex')
             try:
                 self.GradeThreeIndex = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('TimeSet', node)
         if value is not None and 'TimeSet' not in already_processed:
@@ -5231,7 +5231,7 @@ class ChartItem(GeneratedsSuper):
             already_processed.add('XPosition')
             try:
                 self.XPosition = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Id', node)
         if value is not None and 'Id' not in already_processed:
@@ -5546,13 +5546,13 @@ class CircleStyle(GeneratedsSuper):
             outfile.write(' Autosize="%s"' % self.gds_format_boolean(self.Autosize, input_name='Autosize'))
         if self.Strength is not None and 'Strength' not in already_processed:
             already_processed.add('Strength')
-            outfile.write(' Strength=%s' % (self.gds_format_string(quote_attrib(self.Strength).encode(ExternalEncoding), input_name='Strength'), ))
+            outfile.write(' Strength=%s' % (self.gds_format_string(quote_attrib(self.Strength), input_name='Strength'), ))
         if self.StrengthReference is not None and 'StrengthReference' not in already_processed:
             already_processed.add('StrengthReference')
-            outfile.write(' StrengthReference=%s' % (self.gds_format_string(quote_attrib(self.StrengthReference).encode(ExternalEncoding), input_name='StrengthReference'), ))
+            outfile.write(' StrengthReference=%s' % (self.gds_format_string(quote_attrib(self.StrengthReference), input_name='StrengthReference'), ))
         if self.EntityTypeReference is not None and 'EntityTypeReference' not in already_processed:
             already_processed.add('EntityTypeReference')
-            outfile.write(' EntityTypeReference=%s' % (self.gds_format_string(quote_attrib(self.EntityTypeReference).encode(ExternalEncoding), input_name='EntityTypeReference'), ))
+            outfile.write(' EntityTypeReference=%s' % (self.gds_format_string(quote_attrib(self.EntityTypeReference), input_name='EntityTypeReference'), ))
         if self.FillStyle is not None and 'FillStyle' not in already_processed:
             already_processed.add('FillStyle')
             outfile.write(' FillStyle=%s' % (quote_attrib(self.FillStyle), ))
@@ -5567,7 +5567,7 @@ class CircleStyle(GeneratedsSuper):
             outfile.write(' LineWidth="%s"' % self.gds_format_integer(self.LineWidth, input_name='LineWidth'))
         if self.Type is not None and 'Type' not in already_processed:
             already_processed.add('Type')
-            outfile.write(' Type=%s' % (self.gds_format_string(quote_attrib(self.Type).encode(ExternalEncoding), input_name='Type'), ))
+            outfile.write(' Type=%s' % (self.gds_format_string(quote_attrib(self.Type), input_name='Type'), ))
         if self.Filled is not None and 'Filled' not in already_processed:
             already_processed.add('Filled')
             outfile.write(' Filled="%s"' % self.gds_format_boolean(self.Filled, input_name='Filled'))
@@ -5639,7 +5639,7 @@ class CircleStyle(GeneratedsSuper):
             already_processed.add('Diameter')
             try:
                 self.Diameter = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (Diameter): %s' % exp)
         value = find_attr_value_('Autosize', node)
         if value is not None and 'Autosize' not in already_processed:
@@ -5672,21 +5672,21 @@ class CircleStyle(GeneratedsSuper):
             already_processed.add('LineColour')
             try:
                 self.LineColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('BackColour', node)
         if value is not None and 'BackColour' not in already_processed:
             already_processed.add('BackColour')
             try:
                 self.BackColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('LineWidth', node)
         if value is not None and 'LineWidth' not in already_processed:
             already_processed.add('LineWidth')
             try:
                 self.LineWidth = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Type', node)
         if value is not None and 'Type' not in already_processed:
@@ -5792,10 +5792,10 @@ class CIStyle(GeneratedsSuper):
             outfile.write(' Background="%s"' % self.gds_format_boolean(self.Background, input_name='Background'))
         if self.DateTimeFormat is not None and 'DateTimeFormat' not in already_processed:
             already_processed.add('DateTimeFormat')
-            outfile.write(' DateTimeFormat=%s' % (self.gds_format_string(quote_attrib(self.DateTimeFormat).encode(ExternalEncoding), input_name='DateTimeFormat'), ))
+            outfile.write(' DateTimeFormat=%s' % (self.gds_format_string(quote_attrib(self.DateTimeFormat), input_name='DateTimeFormat'), ))
         if self.DateTimeFormatReference is not None and 'DateTimeFormatReference' not in already_processed:
             already_processed.add('DateTimeFormatReference')
-            outfile.write(' DateTimeFormatReference=%s' % (self.gds_format_string(quote_attrib(self.DateTimeFormatReference).encode(ExternalEncoding), input_name='DateTimeFormatReference'), ))
+            outfile.write(' DateTimeFormatReference=%s' % (self.gds_format_string(quote_attrib(self.DateTimeFormatReference), input_name='DateTimeFormatReference'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='CIStyle', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -5880,7 +5880,7 @@ class CIStyle(GeneratedsSuper):
             already_processed.add('SubTextWidth')
             try:
                 self.SubTextWidth = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (SubTextWidth): %s' % exp)
         value = find_attr_value_('Background', node)
         if value is not None and 'Background' not in already_processed:
@@ -5960,7 +5960,7 @@ class Connection(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Connection'):
         if self.Id is not None and 'Id' not in already_processed:
             already_processed.add('Id')
-            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id).encode(ExternalEncoding), input_name='Id'), ))
+            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id), input_name='Id'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='Connection', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -6212,7 +6212,7 @@ class ConnectionStyle(GeneratedsSuper):
             already_processed.add('FanOut')
             try:
                 self.FanOut = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -6282,7 +6282,7 @@ class Corner(GeneratedsSuper):
             outfile.write(' Z="%s"' % self.gds_format_integer(self.Z, input_name='Z'))
         if self.GroupReference is not None and 'GroupReference' not in already_processed:
             already_processed.add('GroupReference')
-            outfile.write(' GroupReference=%s' % (self.gds_format_string(quote_attrib(self.GroupReference).encode(ExternalEncoding), input_name='GroupReference'), ))
+            outfile.write(' GroupReference=%s' % (self.gds_format_string(quote_attrib(self.GroupReference), input_name='GroupReference'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='Corner', fromsubclass_=False, pretty_print=True):
         pass
     def exportLiteral(self, outfile, level, name_='Corner'):
@@ -6323,21 +6323,21 @@ class Corner(GeneratedsSuper):
             already_processed.add('Y')
             try:
                 self.Y = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('X', node)
         if value is not None and 'X' not in already_processed:
             already_processed.add('X')
             try:
                 self.X = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Z', node)
         if value is not None and 'Z' not in already_processed:
             already_processed.add('Z')
             try:
                 self.Z = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('GroupReference', node)
         if value is not None and 'GroupReference' not in already_processed:
@@ -7630,10 +7630,10 @@ class CustomProperty(GeneratedsSuper):
             outfile.write(' Type=%s' % (quote_attrib(self.Type), ))
         if self.Name is not None and 'Name' not in already_processed:
             already_processed.add('Name')
-            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name).encode(ExternalEncoding), input_name='Name'), ))
+            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name), input_name='Name'), ))
         if self.Value is not None and 'Value' not in already_processed:
             already_processed.add('Value')
-            outfile.write(' Value=%s' % (self.gds_format_string(quote_attrib(self.Value).encode(ExternalEncoding), input_name='Value'), ))
+            outfile.write(' Value=%s' % (self.gds_format_string(quote_attrib(self.Value), input_name='Value'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='CustomProperty', fromsubclass_=False, pretty_print=True):
         pass
     def exportLiteral(self, outfile, level, name_='CustomProperty'):
@@ -7848,19 +7848,19 @@ class DatabaseKey(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='DatabaseKey'):
         if self.DatabaseObject is not None and 'DatabaseObject' not in already_processed:
             already_processed.add('DatabaseObject')
-            outfile.write(' DatabaseObject=%s' % (self.gds_format_string(quote_attrib(self.DatabaseObject).encode(ExternalEncoding), input_name='DatabaseObject'), ))
+            outfile.write(' DatabaseObject=%s' % (self.gds_format_string(quote_attrib(self.DatabaseObject), input_name='DatabaseObject'), ))
         if self.DatabaseProxyInstanceName is not None and 'DatabaseProxyInstanceName' not in already_processed:
             already_processed.add('DatabaseProxyInstanceName')
-            outfile.write(' DatabaseProxyInstanceName=%s' % (self.gds_format_string(quote_attrib(self.DatabaseProxyInstanceName).encode(ExternalEncoding), input_name='DatabaseProxyInstanceName'), ))
+            outfile.write(' DatabaseProxyInstanceName=%s' % (self.gds_format_string(quote_attrib(self.DatabaseProxyInstanceName), input_name='DatabaseProxyInstanceName'), ))
         if self.DatabaseProxyClassID is not None and 'DatabaseProxyClassID' not in already_processed:
             already_processed.add('DatabaseProxyClassID')
-            outfile.write(' DatabaseProxyClassID=%s' % (self.gds_format_string(quote_attrib(self.DatabaseProxyClassID).encode(ExternalEncoding), input_name='DatabaseProxyClassID'), ))
+            outfile.write(' DatabaseProxyClassID=%s' % (self.gds_format_string(quote_attrib(self.DatabaseProxyClassID), input_name='DatabaseProxyClassID'), ))
         if self.DatabaseObjectProxyReference is not None and 'DatabaseObjectProxyReference' not in already_processed:
             already_processed.add('DatabaseObjectProxyReference')
-            outfile.write(' DatabaseObjectProxyReference=%s' % (self.gds_format_string(quote_attrib(self.DatabaseObjectProxyReference).encode(ExternalEncoding), input_name='DatabaseObjectProxyReference'), ))
+            outfile.write(' DatabaseObjectProxyReference=%s' % (self.gds_format_string(quote_attrib(self.DatabaseObjectProxyReference), input_name='DatabaseObjectProxyReference'), ))
         if self.DatabaseProxyReference is not None and 'DatabaseProxyReference' not in already_processed:
             already_processed.add('DatabaseProxyReference')
-            outfile.write(' DatabaseProxyReference=%s' % (self.gds_format_string(quote_attrib(self.DatabaseProxyReference).encode(ExternalEncoding), input_name='DatabaseProxyReference'), ))
+            outfile.write(' DatabaseProxyReference=%s' % (self.gds_format_string(quote_attrib(self.DatabaseProxyReference), input_name='DatabaseProxyReference'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='DatabaseKey', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -8126,25 +8126,25 @@ class DatabaseObjectProxy(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='DatabaseObjectProxy'):
         if self.Name is not None and 'Name' not in already_processed:
             already_processed.add('Name')
-            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name).encode(ExternalEncoding), input_name='Name'), ))
+            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name), input_name='Name'), ))
         if self.SemanticTypeGuid is not None and 'SemanticTypeGuid' not in already_processed:
             already_processed.add('SemanticTypeGuid')
             outfile.write(' SemanticTypeGuid=%s' % (quote_attrib(self.SemanticTypeGuid), ))
         if self.PreferredTypeReference is not None and 'PreferredTypeReference' not in already_processed:
             already_processed.add('PreferredTypeReference')
-            outfile.write(' PreferredTypeReference=%s' % (self.gds_format_string(quote_attrib(self.PreferredTypeReference).encode(ExternalEncoding), input_name='PreferredTypeReference'), ))
+            outfile.write(' PreferredTypeReference=%s' % (self.gds_format_string(quote_attrib(self.PreferredTypeReference), input_name='PreferredTypeReference'), ))
         if self.PreferredType is not None and 'PreferredType' not in already_processed:
             already_processed.add('PreferredType')
-            outfile.write(' PreferredType=%s' % (self.gds_format_string(quote_attrib(self.PreferredType).encode(ExternalEncoding), input_name='PreferredType'), ))
+            outfile.write(' PreferredType=%s' % (self.gds_format_string(quote_attrib(self.PreferredType), input_name='PreferredType'), ))
         if self.ParentProxy is not None and 'ParentProxy' not in already_processed:
             already_processed.add('ParentProxy')
-            outfile.write(' ParentProxy=%s' % (self.gds_format_string(quote_attrib(self.ParentProxy).encode(ExternalEncoding), input_name='ParentProxy'), ))
+            outfile.write(' ParentProxy=%s' % (self.gds_format_string(quote_attrib(self.ParentProxy), input_name='ParentProxy'), ))
         if self.Id is not None and 'Id' not in already_processed:
             already_processed.add('Id')
-            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id).encode(ExternalEncoding), input_name='Id'), ))
+            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id), input_name='Id'), ))
         if self.DatabaseProxyReference is not None and 'DatabaseProxyReference' not in already_processed:
             already_processed.add('DatabaseProxyReference')
-            outfile.write(' DatabaseProxyReference=%s' % (self.gds_format_string(quote_attrib(self.DatabaseProxyReference).encode(ExternalEncoding), input_name='DatabaseProxyReference'), ))
+            outfile.write(' DatabaseProxyReference=%s' % (self.gds_format_string(quote_attrib(self.DatabaseProxyReference), input_name='DatabaseProxyReference'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='DatabaseObjectProxy', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -8312,10 +8312,10 @@ class DatabaseProperty(GeneratedsSuper):
             outfile.write(' Visible="%s"' % self.gds_format_boolean(self.Visible, input_name='Visible'))
         if self.DatabasePropertyTypeReference is not None and 'DatabasePropertyTypeReference' not in already_processed:
             already_processed.add('DatabasePropertyTypeReference')
-            outfile.write(' DatabasePropertyTypeReference=%s' % (self.gds_format_string(quote_attrib(self.DatabasePropertyTypeReference).encode(ExternalEncoding), input_name='DatabasePropertyTypeReference'), ))
+            outfile.write(' DatabasePropertyTypeReference=%s' % (self.gds_format_string(quote_attrib(self.DatabasePropertyTypeReference), input_name='DatabasePropertyTypeReference'), ))
         if self.DatabasePropertyType is not None and 'DatabasePropertyType' not in already_processed:
             already_processed.add('DatabasePropertyType')
-            outfile.write(' DatabasePropertyType=%s' % (self.gds_format_string(quote_attrib(self.DatabasePropertyType).encode(ExternalEncoding), input_name='DatabasePropertyType'), ))
+            outfile.write(' DatabasePropertyType=%s' % (self.gds_format_string(quote_attrib(self.DatabasePropertyType), input_name='DatabasePropertyType'), ))
         if self.Value is not None and 'Value' not in already_processed:
             already_processed.add('Value')
             outfile.write(' Value=%s' % (quote_attrib(self.Value), ))
@@ -8363,7 +8363,7 @@ class DatabaseProperty(GeneratedsSuper):
             already_processed.add('LocalDateTimeOffset')
             try:
                 self.LocalDateTimeOffset = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Visible', node)
         if value is not None and 'Visible' not in already_processed:
@@ -8565,7 +8565,7 @@ class DatabasePropertyType(GeneratedsSuper):
             outfile.write(' DateSet="%s"' % self.gds_format_boolean(self.DateSet, input_name='DateSet'))
         if self.Name is not None and 'Name' not in already_processed:
             already_processed.add('Name')
-            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name).encode(ExternalEncoding), input_name='Name'), ))
+            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name), input_name='Name'), ))
         if self.DataType is not None and 'DataType' not in already_processed:
             already_processed.add('DataType')
             outfile.write(' DataType=%s' % (quote_attrib(self.DataType), ))
@@ -8574,7 +8574,7 @@ class DatabasePropertyType(GeneratedsSuper):
             outfile.write(' SemanticTypeGuid=%s' % (quote_attrib(self.SemanticTypeGuid), ))
         if self.Id is not None and 'Id' not in already_processed:
             already_processed.add('Id')
-            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id).encode(ExternalEncoding), input_name='Id'), ))
+            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id), input_name='Id'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='DatabasePropertyType', fromsubclass_=False, pretty_print=True):
         pass
     def exportLiteral(self, outfile, level, name_='DatabasePropertyType'):
@@ -8846,25 +8846,25 @@ class DatabaseProxy(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='DatabaseProxy'):
         if self.ClassID is not None and 'ClassID' not in already_processed:
             already_processed.add('ClassID')
-            outfile.write(' ClassID=%s' % (self.gds_format_string(quote_attrib(self.ClassID).encode(ExternalEncoding), input_name='ClassID'), ))
+            outfile.write(' ClassID=%s' % (self.gds_format_string(quote_attrib(self.ClassID), input_name='ClassID'), ))
         if self.ConnectString is not None and 'ConnectString' not in already_processed:
             already_processed.add('ConnectString')
-            outfile.write(' ConnectString=%s' % (self.gds_format_string(quote_attrib(self.ConnectString).encode(ExternalEncoding), input_name='ConnectString'), ))
+            outfile.write(' ConnectString=%s' % (self.gds_format_string(quote_attrib(self.ConnectString), input_name='ConnectString'), ))
         if self.DisplayName is not None and 'DisplayName' not in already_processed:
             already_processed.add('DisplayName')
-            outfile.write(' DisplayName=%s' % (self.gds_format_string(quote_attrib(self.DisplayName).encode(ExternalEncoding), input_name='DisplayName'), ))
+            outfile.write(' DisplayName=%s' % (self.gds_format_string(quote_attrib(self.DisplayName), input_name='DisplayName'), ))
         if self.MultipleKeysEnabled is not None and 'MultipleKeysEnabled' not in already_processed:
             already_processed.add('MultipleKeysEnabled')
             outfile.write(' MultipleKeysEnabled="%s"' % self.gds_format_boolean(self.MultipleKeysEnabled, input_name='MultipleKeysEnabled'))
         if self.ClassName is not None and 'ClassName' not in already_processed:
             already_processed.add('ClassName')
-            outfile.write(' ClassName=%s' % (self.gds_format_string(quote_attrib(self.ClassName).encode(ExternalEncoding), input_name='ClassName'), ))
+            outfile.write(' ClassName=%s' % (self.gds_format_string(quote_attrib(self.ClassName), input_name='ClassName'), ))
         if self.InstanceName is not None and 'InstanceName' not in already_processed:
             already_processed.add('InstanceName')
-            outfile.write(' InstanceName=%s' % (self.gds_format_string(quote_attrib(self.InstanceName).encode(ExternalEncoding), input_name='InstanceName'), ))
+            outfile.write(' InstanceName=%s' % (self.gds_format_string(quote_attrib(self.InstanceName), input_name='InstanceName'), ))
         if self.Id is not None and 'Id' not in already_processed:
             already_processed.add('Id')
-            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id).encode(ExternalEncoding), input_name='Id'), ))
+            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id), input_name='Id'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='DatabaseProxy', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -9132,13 +9132,13 @@ class DateTimeFormat(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='DateTimeFormat'):
         if self.Name is not None and 'Name' not in already_processed:
             already_processed.add('Name')
-            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name).encode(ExternalEncoding), input_name='Name'), ))
+            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name), input_name='Name'), ))
         if self.Id is not None and 'Id' not in already_processed:
             already_processed.add('Id')
-            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id).encode(ExternalEncoding), input_name='Id'), ))
+            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id), input_name='Id'), ))
         if self.Format is not None and 'Format' not in already_processed:
             already_processed.add('Format')
-            outfile.write(' Format=%s' % (self.gds_format_string(quote_attrib(self.Format).encode(ExternalEncoding), input_name='Format'), ))
+            outfile.write(' Format=%s' % (self.gds_format_string(quote_attrib(self.Format), input_name='Format'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='DateTimeFormat', fromsubclass_=False, pretty_print=True):
         pass
     def exportLiteral(self, outfile, level, name_='DateTimeFormat'):
@@ -9404,21 +9404,21 @@ class End(GeneratedsSuper):
             already_processed.add('Y')
             try:
                 self.Y = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('X', node)
         if value is not None and 'X' not in already_processed:
             already_processed.add('X')
             try:
                 self.X = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Z', node)
         if value is not None and 'Z' not in already_processed:
             already_processed.add('Z')
             try:
                 self.Z = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'Entity':
@@ -9530,13 +9530,13 @@ class Entity(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Entity'):
         if self.EntityId is not None and 'EntityId' not in already_processed:
             already_processed.add('EntityId')
-            outfile.write(' EntityId=%s' % (self.gds_format_string(quote_attrib(self.EntityId).encode(ExternalEncoding), input_name='EntityId'), ))
+            outfile.write(' EntityId=%s' % (self.gds_format_string(quote_attrib(self.EntityId), input_name='EntityId'), ))
         if self.SemanticTypeGuid is not None and 'SemanticTypeGuid' not in already_processed:
             already_processed.add('SemanticTypeGuid')
             outfile.write(' SemanticTypeGuid=%s' % (quote_attrib(self.SemanticTypeGuid), ))
         if self.Identity is not None and 'Identity' not in already_processed:
             already_processed.add('Identity')
-            outfile.write(' Identity=%s' % (self.gds_format_string(quote_attrib(self.Identity).encode(ExternalEncoding), input_name='Identity'), ))
+            outfile.write(' Identity=%s' % (self.gds_format_string(quote_attrib(self.Identity), input_name='Identity'), ))
         if self.LabelIsIdentity is not None and 'LabelIsIdentity' not in already_processed:
             already_processed.add('LabelIsIdentity')
             outfile.write(' LabelIsIdentity="%s"' % self.gds_format_boolean(self.LabelIsIdentity, input_name='LabelIsIdentity'))
@@ -9884,7 +9884,7 @@ class EntityType(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='EntityType'):
         if self.Name is not None and 'Name' not in already_processed:
             already_processed.add('Name')
-            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name).encode(ExternalEncoding), input_name='Name'), ))
+            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name), input_name='Name'), ))
         if self.Colour is not None and 'Colour' not in already_processed:
             already_processed.add('Colour')
             outfile.write(' Colour="%s"' % self.gds_format_integer(self.Colour, input_name='Colour'))
@@ -9893,7 +9893,7 @@ class EntityType(GeneratedsSuper):
             outfile.write(' SemanticTypeGuid=%s' % (quote_attrib(self.SemanticTypeGuid), ))
         if self.IconFile is not None and 'IconFile' not in already_processed:
             already_processed.add('IconFile')
-            outfile.write(' IconFile=%s' % (self.gds_format_string(quote_attrib(self.IconFile).encode(ExternalEncoding), input_name='IconFile'), ))
+            outfile.write(' IconFile=%s' % (self.gds_format_string(quote_attrib(self.IconFile), input_name='IconFile'), ))
         if self.PreferredRepresentation is not None and 'PreferredRepresentation' not in already_processed:
             already_processed.add('PreferredRepresentation')
             outfile.write(' PreferredRepresentation=%s' % (quote_attrib(self.PreferredRepresentation), ))
@@ -9902,7 +9902,7 @@ class EntityType(GeneratedsSuper):
             outfile.write(' IconShadingColour="%s"' % self.gds_format_integer(self.IconShadingColour, input_name='IconShadingColour'))
         if self.Id is not None and 'Id' not in already_processed:
             already_processed.add('Id')
-            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id).encode(ExternalEncoding), input_name='Id'), ))
+            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id), input_name='Id'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='EntityType', fromsubclass_=False, pretty_print=True):
         pass
     def exportLiteral(self, outfile, level, name_='EntityType'):
@@ -9959,7 +9959,7 @@ class EntityType(GeneratedsSuper):
             already_processed.add('Colour')
             try:
                 self.Colour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('SemanticTypeGuid', node)
         if value is not None and 'SemanticTypeGuid' not in already_processed:
@@ -9979,7 +9979,7 @@ class EntityType(GeneratedsSuper):
             already_processed.add('IconShadingColour')
             try:
                 self.IconShadingColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Id', node)
         if value is not None and 'Id' not in already_processed:
@@ -10131,10 +10131,10 @@ class EntityTypeEntry(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='EntityTypeEntry'):
         if self.EntityTypeReference is not None and 'EntityTypeReference' not in already_processed:
             already_processed.add('EntityTypeReference')
-            outfile.write(' EntityTypeReference=%s' % (self.gds_format_string(quote_attrib(self.EntityTypeReference).encode(ExternalEncoding), input_name='EntityTypeReference'), ))
+            outfile.write(' EntityTypeReference=%s' % (self.gds_format_string(quote_attrib(self.EntityTypeReference), input_name='EntityTypeReference'), ))
         if self.Entity is not None and 'Entity' not in already_processed:
             already_processed.add('Entity')
-            outfile.write(' Entity=%s' % (self.gds_format_string(quote_attrib(self.Entity).encode(ExternalEncoding), input_name='Entity'), ))
+            outfile.write(' Entity=%s' % (self.gds_format_string(quote_attrib(self.Entity), input_name='Entity'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='EntityTypeEntry', fromsubclass_=False, pretty_print=True):
         pass
     def exportLiteral(self, outfile, level, name_='EntityTypeEntry'):
@@ -10494,13 +10494,13 @@ class EventStyle(GeneratedsSuper):
             outfile.write(' Width="%s"' % self.gds_format_double(self.Width, input_name='Width'))
         if self.StrengthReference is not None and 'StrengthReference' not in already_processed:
             already_processed.add('StrengthReference')
-            outfile.write(' StrengthReference=%s' % (self.gds_format_string(quote_attrib(self.StrengthReference).encode(ExternalEncoding), input_name='StrengthReference'), ))
+            outfile.write(' StrengthReference=%s' % (self.gds_format_string(quote_attrib(self.StrengthReference), input_name='StrengthReference'), ))
         if self.LinkAreaVisible is not None and 'LinkAreaVisible' not in already_processed:
             already_processed.add('LinkAreaVisible')
             outfile.write(' LinkAreaVisible="%s"' % self.gds_format_boolean(self.LinkAreaVisible, input_name='LinkAreaVisible'))
         if self.EntityTypeReference is not None and 'EntityTypeReference' not in already_processed:
             already_processed.add('EntityTypeReference')
-            outfile.write(' EntityTypeReference=%s' % (self.gds_format_string(quote_attrib(self.EntityTypeReference).encode(ExternalEncoding), input_name='EntityTypeReference'), ))
+            outfile.write(' EntityTypeReference=%s' % (self.gds_format_string(quote_attrib(self.EntityTypeReference), input_name='EntityTypeReference'), ))
         if self.FillStyle is not None and 'FillStyle' not in already_processed:
             already_processed.add('FillStyle')
             outfile.write(' FillStyle=%s' % (quote_attrib(self.FillStyle), ))
@@ -10518,7 +10518,7 @@ class EventStyle(GeneratedsSuper):
             outfile.write(' Alignment=%s' % (quote_attrib(self.Alignment), ))
         if self.Strength is not None and 'Strength' not in already_processed:
             already_processed.add('Strength')
-            outfile.write(' Strength=%s' % (self.gds_format_string(quote_attrib(self.Strength).encode(ExternalEncoding), input_name='Strength'), ))
+            outfile.write(' Strength=%s' % (self.gds_format_string(quote_attrib(self.Strength), input_name='Strength'), ))
         if self.TypeNameVisible is not None and 'TypeNameVisible' not in already_processed:
             already_processed.add('TypeNameVisible')
             outfile.write(' TypeNameVisible="%s"' % self.gds_format_boolean(self.TypeNameVisible, input_name='TypeNameVisible'))
@@ -10527,7 +10527,7 @@ class EventStyle(GeneratedsSuper):
             outfile.write(' Height="%s"' % self.gds_format_double(self.Height, input_name='Height'))
         if self.Type is not None and 'Type' not in already_processed:
             already_processed.add('Type')
-            outfile.write(' Type=%s' % (self.gds_format_string(quote_attrib(self.Type).encode(ExternalEncoding), input_name='Type'), ))
+            outfile.write(' Type=%s' % (self.gds_format_string(quote_attrib(self.Type), input_name='Type'), ))
         if self.IconShadingColour is not None and 'IconShadingColour' not in already_processed:
             already_processed.add('IconShadingColour')
             outfile.write(' IconShadingColour="%s"' % self.gds_format_integer(self.IconShadingColour, input_name='IconShadingColour'))
@@ -10652,14 +10652,14 @@ class EventStyle(GeneratedsSuper):
             already_processed.add('LineWidth')
             try:
                 self.LineWidth = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Width', node)
         if value is not None and 'Width' not in already_processed:
             already_processed.add('Width')
             try:
                 self.Width = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (Width): %s' % exp)
         value = find_attr_value_('StrengthReference', node)
         if value is not None and 'StrengthReference' not in already_processed:
@@ -10688,7 +10688,7 @@ class EventStyle(GeneratedsSuper):
             already_processed.add('LineColour')
             try:
                 self.LineColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Enlargement', node)
         if value is not None and 'Enlargement' not in already_processed:
@@ -10700,7 +10700,7 @@ class EventStyle(GeneratedsSuper):
             already_processed.add('BackColour')
             try:
                 self.BackColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Alignment', node)
         if value is not None and 'Alignment' not in already_processed:
@@ -10725,7 +10725,7 @@ class EventStyle(GeneratedsSuper):
             already_processed.add('Height')
             try:
                 self.Height = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (Height): %s' % exp)
         value = find_attr_value_('Type', node)
         if value is not None and 'Type' not in already_processed:
@@ -10736,7 +10736,7 @@ class EventStyle(GeneratedsSuper):
             already_processed.add('IconShadingColour')
             try:
                 self.IconShadingColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Filled', node)
         if value is not None and 'Filled' not in already_processed:
@@ -10810,7 +10810,7 @@ class Field(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Field'):
         if self.Field is not None and 'Field' not in already_processed:
             already_processed.add('Field')
-            outfile.write(' Field=%s' % (self.gds_format_string(quote_attrib(self.Field).encode(ExternalEncoding), input_name='Field'), ))
+            outfile.write(' Field=%s' % (self.gds_format_string(quote_attrib(self.Field), input_name='Field'), ))
         if self.Type is not None and 'Type' not in already_processed:
             already_processed.add('Type')
             outfile.write(' Type=%s' % (quote_attrib(self.Type), ))
@@ -11029,7 +11029,7 @@ class Font(GeneratedsSuper):
             outfile.write(' Strikeout="%s"' % self.gds_format_boolean(self.Strikeout, input_name='Strikeout'))
         if self.FaceName is not None and 'FaceName' not in already_processed:
             already_processed.add('FaceName')
-            outfile.write(' FaceName=%s' % (self.gds_format_string(quote_attrib(self.FaceName).encode(ExternalEncoding), input_name='FaceName'), ))
+            outfile.write(' FaceName=%s' % (self.gds_format_string(quote_attrib(self.FaceName), input_name='FaceName'), ))
         if self.Bold is not None and 'Bold' not in already_processed:
             already_processed.add('Bold')
             outfile.write(' Bold="%s"' % self.gds_format_boolean(self.Bold, input_name='Bold'))
@@ -11147,7 +11147,7 @@ class Font(GeneratedsSuper):
             already_processed.add('BackColour')
             try:
                 self.BackColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Italic', node)
         if value is not None and 'Italic' not in already_processed:
@@ -11163,14 +11163,14 @@ class Font(GeneratedsSuper):
             already_processed.add('PointSize')
             try:
                 self.PointSize = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('FontColour', node)
         if value is not None and 'FontColour' not in already_processed:
             already_processed.add('FontColour')
             try:
                 self.FontColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -11233,7 +11233,7 @@ class Footer(GeneratedsSuper):
             outfile.write(' Position=%s' % (quote_attrib(self.Position), ))
         if self.Property is not None and 'Property' not in already_processed:
             already_processed.add('Property')
-            outfile.write(' Property=%s' % (self.gds_format_string(quote_attrib(self.Property).encode(ExternalEncoding), input_name='Property'), ))
+            outfile.write(' Property=%s' % (self.gds_format_string(quote_attrib(self.Property), input_name='Property'), ))
         if self.Visible is not None and 'Visible' not in already_processed:
             already_processed.add('Visible')
             outfile.write(' Visible="%s"' % self.gds_format_boolean(self.Visible, input_name='Visible'))
@@ -11485,14 +11485,14 @@ class FrameStyle(GeneratedsSuper):
             already_processed.add('Colour')
             try:
                 self.Colour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Margin', node)
         if value is not None and 'Margin' not in already_processed:
             already_processed.add('Margin')
             try:
                 self.Margin = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -11787,7 +11787,7 @@ class Group(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Group'):
         if self.Id is not None and 'Id' not in already_processed:
             already_processed.add('Id')
-            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id).encode(ExternalEncoding), input_name='Id'), ))
+            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id), input_name='Id'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='Group', fromsubclass_=False, pretty_print=True):
         pass
     def exportLiteral(self, outfile, level, name_='Group'):
@@ -11969,7 +11969,7 @@ class Header(GeneratedsSuper):
             outfile.write(' Position=%s' % (quote_attrib(self.Position), ))
         if self.Property is not None and 'Property' not in already_processed:
             already_processed.add('Property')
-            outfile.write(' Property=%s' % (self.gds_format_string(quote_attrib(self.Property).encode(ExternalEncoding), input_name='Property'), ))
+            outfile.write(' Property=%s' % (self.gds_format_string(quote_attrib(self.Property), input_name='Property'), ))
         if self.Visible is not None and 'Visible' not in already_processed:
             already_processed.add('Visible')
             outfile.write(' Visible="%s"' % self.gds_format_boolean(self.Visible, input_name='Visible'))
@@ -12218,14 +12218,14 @@ class Icon(GeneratedsSuper):
             already_processed.add('TextX')
             try:
                 self.TextX = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('TextY', node)
         if value is not None and 'TextY' not in already_processed:
             already_processed.add('TextY')
             try:
                 self.TextY = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'IconStyle':
@@ -12303,7 +12303,7 @@ class IconPicture(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='IconPicture'):
         if self.DataGuid is not None and 'DataGuid' not in already_processed:
             already_processed.add('DataGuid')
-            outfile.write(' DataGuid=%s' % (self.gds_format_string(quote_attrib(self.DataGuid).encode(ExternalEncoding), input_name='DataGuid'), ))
+            outfile.write(' DataGuid=%s' % (self.gds_format_string(quote_attrib(self.DataGuid), input_name='DataGuid'), ))
         if self.Visible is not None and 'Visible' not in already_processed:
             already_processed.add('Visible')
             outfile.write(' Visible="%s"' % self.gds_format_boolean(self.Visible, input_name='Visible'))
@@ -12380,14 +12380,14 @@ class IconPicture(GeneratedsSuper):
             already_processed.add('CustomSize')
             try:
                 self.CustomSize = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (CustomSize): %s' % exp)
         value = find_attr_value_('DataLength', node)
         if value is not None and 'DataLength' not in already_processed:
             already_processed.add('DataLength')
             try:
                 self.DataLength = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Data', node)
         if value is not None and 'Data' not in already_processed:
@@ -12476,10 +12476,10 @@ class IconStyle(GeneratedsSuper):
             outfile.write(' IconShadingColour="%s"' % self.gds_format_integer(self.IconShadingColour, input_name='IconShadingColour'))
         if self.EntityTypeReference is not None and 'EntityTypeReference' not in already_processed:
             already_processed.add('EntityTypeReference')
-            outfile.write(' EntityTypeReference=%s' % (self.gds_format_string(quote_attrib(self.EntityTypeReference).encode(ExternalEncoding), input_name='EntityTypeReference'), ))
+            outfile.write(' EntityTypeReference=%s' % (self.gds_format_string(quote_attrib(self.EntityTypeReference), input_name='EntityTypeReference'), ))
         if self.Type is not None and 'Type' not in already_processed:
             already_processed.add('Type')
-            outfile.write(' Type=%s' % (self.gds_format_string(quote_attrib(self.Type).encode(ExternalEncoding), input_name='Type'), ))
+            outfile.write(' Type=%s' % (self.gds_format_string(quote_attrib(self.Type), input_name='Type'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='IconStyle', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -12543,7 +12543,7 @@ class IconStyle(GeneratedsSuper):
             already_processed.add('IconShadingColour')
             try:
                 self.IconShadingColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('EntityTypeReference', node)
         if value is not None and 'EntityTypeReference' not in already_processed:
@@ -12817,10 +12817,10 @@ class JunctionStyle(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='JunctionStyle'):
         if self.Strength is not None and 'Strength' not in already_processed:
             already_processed.add('Strength')
-            outfile.write(' Strength=%s' % (self.gds_format_string(quote_attrib(self.Strength).encode(ExternalEncoding), input_name='Strength'), ))
+            outfile.write(' Strength=%s' % (self.gds_format_string(quote_attrib(self.Strength), input_name='Strength'), ))
         if self.StrengthReference is not None and 'StrengthReference' not in already_processed:
             already_processed.add('StrengthReference')
-            outfile.write(' StrengthReference=%s' % (self.gds_format_string(quote_attrib(self.StrengthReference).encode(ExternalEncoding), input_name='StrengthReference'), ))
+            outfile.write(' StrengthReference=%s' % (self.gds_format_string(quote_attrib(self.StrengthReference), input_name='StrengthReference'), ))
         if self.ThemeStrengthAfter is not None and 'ThemeStrengthAfter' not in already_processed:
             already_processed.add('ThemeStrengthAfter')
             outfile.write(' ThemeStrengthAfter=%s' % (quote_attrib(self.ThemeStrengthAfter), ))
@@ -12901,7 +12901,7 @@ class JunctionStyle(GeneratedsSuper):
             already_processed.add('Colour')
             try:
                 self.Colour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('ThemeColourAfter', node)
         if value is not None and 'ThemeColourAfter' not in already_processed:
@@ -12918,7 +12918,7 @@ class JunctionStyle(GeneratedsSuper):
             already_processed.add('LineWidth')
             try:
                 self.LineWidth = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -12968,7 +12968,7 @@ class Key(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Key'):
         if self.Item is not None and 'Item' not in already_processed:
             already_processed.add('Item')
-            outfile.write(' Item=%s' % (self.gds_format_string(quote_attrib(self.Item).encode(ExternalEncoding), input_name='Item'), ))
+            outfile.write(' Item=%s' % (self.gds_format_string(quote_attrib(self.Item), input_name='Item'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='Key', fromsubclass_=False, pretty_print=True):
         pass
     def exportLiteral(self, outfile, level, name_='Key'):
@@ -13049,7 +13049,7 @@ class Label(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Label'):
         if self.LabelId is not None and 'LabelId' not in already_processed:
             already_processed.add('LabelId')
-            outfile.write(' LabelId=%s' % (self.gds_format_string(quote_attrib(self.LabelId).encode(ExternalEncoding), input_name='LabelId'), ))
+            outfile.write(' LabelId=%s' % (self.gds_format_string(quote_attrib(self.LabelId), input_name='LabelId'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='Label', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -13361,14 +13361,14 @@ class LegendDefinition(GeneratedsSuper):
             already_processed.add('X')
             try:
                 self.X = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Y', node)
         if value is not None and 'Y' not in already_processed:
             already_processed.add('Y')
             try:
                 self.Y = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('HorizontalAlignment', node)
         if value is not None and 'HorizontalAlignment' not in already_processed:
@@ -13487,10 +13487,10 @@ class LegendItem(GeneratedsSuper):
             outfile.write(' Arrows=%s' % (quote_attrib(self.Arrows), ))
         if self.Label is not None and 'Label' not in already_processed:
             already_processed.add('Label')
-            outfile.write(' Label=%s' % (self.gds_format_string(quote_attrib(self.Label).encode(ExternalEncoding), input_name='Label'), ))
+            outfile.write(' Label=%s' % (self.gds_format_string(quote_attrib(self.Label), input_name='Label'), ))
         if self.ImageName is not None and 'ImageName' not in already_processed:
             already_processed.add('ImageName')
-            outfile.write(' ImageName=%s' % (self.gds_format_string(quote_attrib(self.ImageName).encode(ExternalEncoding), input_name='ImageName'), ))
+            outfile.write(' ImageName=%s' % (self.gds_format_string(quote_attrib(self.ImageName), input_name='ImageName'), ))
         if self.IconShadingColour is not None and 'IconShadingColour' not in already_processed:
             already_processed.add('IconShadingColour')
             outfile.write(' IconShadingColour="%s"' % self.gds_format_integer(self.IconShadingColour, input_name='IconShadingColour'))
@@ -13571,7 +13571,7 @@ class LegendItem(GeneratedsSuper):
             already_processed.add('Colour')
             try:
                 self.Colour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Arrows', node)
         if value is not None and 'Arrows' not in already_processed:
@@ -13591,14 +13591,14 @@ class LegendItem(GeneratedsSuper):
             already_processed.add('IconShadingColour')
             try:
                 self.IconShadingColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('LineWidth', node)
         if value is not None and 'LineWidth' not in already_processed:
             already_processed.add('LineWidth')
             try:
                 self.LineWidth = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Type', node)
         if value is not None and 'Type' not in already_processed:
@@ -13707,16 +13707,16 @@ class Link(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Link'):
         if self.End2Reference is not None and 'End2Reference' not in already_processed:
             already_processed.add('End2Reference')
-            outfile.write(' End2Reference=%s' % (self.gds_format_string(quote_attrib(self.End2Reference).encode(ExternalEncoding), input_name='End2Reference'), ))
+            outfile.write(' End2Reference=%s' % (self.gds_format_string(quote_attrib(self.End2Reference), input_name='End2Reference'), ))
         if self.End1Reference is not None and 'End1Reference' not in already_processed:
             already_processed.add('End1Reference')
-            outfile.write(' End1Reference=%s' % (self.gds_format_string(quote_attrib(self.End1Reference).encode(ExternalEncoding), input_name='End1Reference'), ))
+            outfile.write(' End1Reference=%s' % (self.gds_format_string(quote_attrib(self.End1Reference), input_name='End1Reference'), ))
         if self.SemanticTypeGuid is not None and 'SemanticTypeGuid' not in already_processed:
             already_processed.add('SemanticTypeGuid')
             outfile.write(' SemanticTypeGuid=%s' % (quote_attrib(self.SemanticTypeGuid), ))
         if self.End1Id is not None and 'End1Id' not in already_processed:
             already_processed.add('End1Id')
-            outfile.write(' End1Id=%s' % (self.gds_format_string(quote_attrib(self.End1Id).encode(ExternalEncoding), input_name='End1Id'), ))
+            outfile.write(' End1Id=%s' % (self.gds_format_string(quote_attrib(self.End1Id), input_name='End1Id'), ))
         if self.LabelSegment is not None and 'LabelSegment' not in already_processed:
             already_processed.add('LabelSegment')
             outfile.write(' LabelSegment="%s"' % self.gds_format_integer(self.LabelSegment, input_name='LabelSegment'))
@@ -13725,13 +13725,13 @@ class Link(GeneratedsSuper):
             outfile.write(' LabelPos="%s"' % self.gds_format_integer(self.LabelPos, input_name='LabelPos'))
         if self.End2Id is not None and 'End2Id' not in already_processed:
             already_processed.add('End2Id')
-            outfile.write(' End2Id=%s' % (self.gds_format_string(quote_attrib(self.End2Id).encode(ExternalEncoding), input_name='End2Id'), ))
+            outfile.write(' End2Id=%s' % (self.gds_format_string(quote_attrib(self.End2Id), input_name='End2Id'), ))
         if self.Offset is not None and 'Offset' not in already_processed:
             already_processed.add('Offset')
             outfile.write(' Offset="%s"' % self.gds_format_integer(self.Offset, input_name='Offset'))
         if self.ConnectionReference is not None and 'ConnectionReference' not in already_processed:
             already_processed.add('ConnectionReference')
-            outfile.write(' ConnectionReference=%s' % (self.gds_format_string(quote_attrib(self.ConnectionReference).encode(ExternalEncoding), input_name='ConnectionReference'), ))
+            outfile.write(' ConnectionReference=%s' % (self.gds_format_string(quote_attrib(self.ConnectionReference), input_name='ConnectionReference'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='Link', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -13842,14 +13842,14 @@ class Link(GeneratedsSuper):
             already_processed.add('LabelSegment')
             try:
                 self.LabelSegment = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('LabelPos', node)
         if value is not None and 'LabelPos' not in already_processed:
             already_processed.add('LabelPos')
             try:
                 self.LabelPos = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('End2Id', node)
         if value is not None and 'End2Id' not in already_processed:
@@ -13860,7 +13860,7 @@ class Link(GeneratedsSuper):
             already_processed.add('Offset')
             try:
                 self.Offset = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('ConnectionReference', node)
         if value is not None and 'ConnectionReference' not in already_processed:
@@ -14065,16 +14065,16 @@ class LinkStyle(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='LinkStyle'):
         if self.Strength is not None and 'Strength' not in already_processed:
             already_processed.add('Strength')
-            outfile.write(' Strength=%s' % (self.gds_format_string(quote_attrib(self.Strength).encode(ExternalEncoding), input_name='Strength'), ))
+            outfile.write(' Strength=%s' % (self.gds_format_string(quote_attrib(self.Strength), input_name='Strength'), ))
         if self.ArrowStyle is not None and 'ArrowStyle' not in already_processed:
             already_processed.add('ArrowStyle')
             outfile.write(' ArrowStyle=%s' % (quote_attrib(self.ArrowStyle), ))
         if self.LinkTypeReference is not None and 'LinkTypeReference' not in already_processed:
             already_processed.add('LinkTypeReference')
-            outfile.write(' LinkTypeReference=%s' % (self.gds_format_string(quote_attrib(self.LinkTypeReference).encode(ExternalEncoding), input_name='LinkTypeReference'), ))
+            outfile.write(' LinkTypeReference=%s' % (self.gds_format_string(quote_attrib(self.LinkTypeReference), input_name='LinkTypeReference'), ))
         if self.StrengthReference is not None and 'StrengthReference' not in already_processed:
             already_processed.add('StrengthReference')
-            outfile.write(' StrengthReference=%s' % (self.gds_format_string(quote_attrib(self.StrengthReference).encode(ExternalEncoding), input_name='StrengthReference'), ))
+            outfile.write(' StrengthReference=%s' % (self.gds_format_string(quote_attrib(self.StrengthReference), input_name='StrengthReference'), ))
         if self.LineColour is not None and 'LineColour' not in already_processed:
             already_processed.add('LineColour')
             outfile.write(' LineColour="%s"' % self.gds_format_integer(self.LineColour, input_name='LineColour'))
@@ -14089,7 +14089,7 @@ class LinkStyle(GeneratedsSuper):
             outfile.write(' LineWidth="%s"' % self.gds_format_integer(self.LineWidth, input_name='LineWidth'))
         if self.Type is not None and 'Type' not in already_processed:
             already_processed.add('Type')
-            outfile.write(' Type=%s' % (self.gds_format_string(quote_attrib(self.Type).encode(ExternalEncoding), input_name='Type'), ))
+            outfile.write(' Type=%s' % (self.gds_format_string(quote_attrib(self.Type), input_name='Type'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='LinkStyle', fromsubclass_=False, pretty_print=True):
         pass
     def exportLiteral(self, outfile, level, name_='LinkStyle'):
@@ -14167,7 +14167,7 @@ class LinkStyle(GeneratedsSuper):
             already_processed.add('LineColour')
             try:
                 self.LineColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('MlStyle', node)
         if value is not None and 'MlStyle' not in already_processed:
@@ -14179,14 +14179,14 @@ class LinkStyle(GeneratedsSuper):
             already_processed.add('FanOut')
             try:
                 self.FanOut = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('LineWidth', node)
         if value is not None and 'LineWidth' not in already_processed:
             already_processed.add('LineWidth')
             try:
                 self.LineWidth = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Type', node)
         if value is not None and 'Type' not in already_processed:
@@ -14259,10 +14259,10 @@ class LinkType(GeneratedsSuper):
             outfile.write(' SemanticTypeGuid=%s' % (quote_attrib(self.SemanticTypeGuid), ))
         if self.Id is not None and 'Id' not in already_processed:
             already_processed.add('Id')
-            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id).encode(ExternalEncoding), input_name='Id'), ))
+            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id), input_name='Id'), ))
         if self.Name is not None and 'Name' not in already_processed:
             already_processed.add('Name')
-            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name).encode(ExternalEncoding), input_name='Name'), ))
+            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name), input_name='Name'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='LinkType', fromsubclass_=False, pretty_print=True):
         pass
     def exportLiteral(self, outfile, level, name_='LinkType'):
@@ -14303,7 +14303,7 @@ class LinkType(GeneratedsSuper):
             already_processed.add('Colour')
             try:
                 self.Colour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('SemanticTypeGuid', node)
         if value is not None and 'SemanticTypeGuid' not in already_processed:
@@ -14462,10 +14462,10 @@ class LinkTypeEntry(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='LinkTypeEntry'):
         if self.LinkType is not None and 'LinkType' not in already_processed:
             already_processed.add('LinkType')
-            outfile.write(' LinkType=%s' % (self.gds_format_string(quote_attrib(self.LinkType).encode(ExternalEncoding), input_name='LinkType'), ))
+            outfile.write(' LinkType=%s' % (self.gds_format_string(quote_attrib(self.LinkType), input_name='LinkType'), ))
         if self.LinkTypeReference is not None and 'LinkTypeReference' not in already_processed:
             already_processed.add('LinkTypeReference')
-            outfile.write(' LinkTypeReference=%s' % (self.gds_format_string(quote_attrib(self.LinkTypeReference).encode(ExternalEncoding), input_name='LinkTypeReference'), ))
+            outfile.write(' LinkTypeReference=%s' % (self.gds_format_string(quote_attrib(self.LinkTypeReference), input_name='LinkTypeReference'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='LinkTypeEntry', fromsubclass_=False, pretty_print=True):
         pass
     def exportLiteral(self, outfile, level, name_='LinkTypeEntry'):
@@ -14697,19 +14697,19 @@ class OleItem(GeneratedsSuper):
             outfile.write(' Width="%s"' % self.gds_format_integer(self.Width, input_name='Width'))
         if self.ProgID is not None and 'ProgID' not in already_processed:
             already_processed.add('ProgID')
-            outfile.write(' ProgID=%s' % (self.gds_format_string(quote_attrib(self.ProgID).encode(ExternalEncoding), input_name='ProgID'), ))
+            outfile.write(' ProgID=%s' % (self.gds_format_string(quote_attrib(self.ProgID), input_name='ProgID'), ))
         if self.DataLength is not None and 'DataLength' not in already_processed:
             already_processed.add('DataLength')
             outfile.write(' DataLength="%s"' % self.gds_format_integer(self.DataLength, input_name='DataLength'))
         if self.Path is not None and 'Path' not in already_processed:
             already_processed.add('Path')
-            outfile.write(' Path=%s' % (self.gds_format_string(quote_attrib(self.Path).encode(ExternalEncoding), input_name='Path'), ))
+            outfile.write(' Path=%s' % (self.gds_format_string(quote_attrib(self.Path), input_name='Path'), ))
         if self.TextX is not None and 'TextX' not in already_processed:
             already_processed.add('TextX')
             outfile.write(' TextX="%s"' % self.gds_format_integer(self.TextX, input_name='TextX'))
         if self.DataGuid is not None and 'DataGuid' not in already_processed:
             already_processed.add('DataGuid')
-            outfile.write(' DataGuid=%s' % (self.gds_format_string(quote_attrib(self.DataGuid).encode(ExternalEncoding), input_name='DataGuid'), ))
+            outfile.write(' DataGuid=%s' % (self.gds_format_string(quote_attrib(self.DataGuid), input_name='DataGuid'), ))
         if self.Data is not None and 'Data' not in already_processed:
             already_processed.add('Data')
             outfile.write(' Data=%s' % (quote_attrib(self.Data), ))
@@ -14812,14 +14812,14 @@ class OleItem(GeneratedsSuper):
             already_processed.add('Height')
             try:
                 self.Height = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Width', node)
         if value is not None and 'Width' not in already_processed:
             already_processed.add('Width')
             try:
                 self.Width = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('ProgID', node)
         if value is not None and 'ProgID' not in already_processed:
@@ -14830,7 +14830,7 @@ class OleItem(GeneratedsSuper):
             already_processed.add('DataLength')
             try:
                 self.DataLength = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.DataLength < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -14843,7 +14843,7 @@ class OleItem(GeneratedsSuper):
             already_processed.add('TextX')
             try:
                 self.TextX = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('DataGuid', node)
         if value is not None and 'DataGuid' not in already_processed:
@@ -14858,7 +14858,7 @@ class OleItem(GeneratedsSuper):
             already_processed.add('TextY')
             try:
                 self.TextY = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'OleItemStyle':
@@ -14941,16 +14941,16 @@ class OleItemStyle(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='OleItemStyle'):
         if self.Strength is not None and 'Strength' not in already_processed:
             already_processed.add('Strength')
-            outfile.write(' Strength=%s' % (self.gds_format_string(quote_attrib(self.Strength).encode(ExternalEncoding), input_name='Strength'), ))
+            outfile.write(' Strength=%s' % (self.gds_format_string(quote_attrib(self.Strength), input_name='Strength'), ))
         if self.ShowFrame is not None and 'ShowFrame' not in already_processed:
             already_processed.add('ShowFrame')
             outfile.write(' ShowFrame="%s"' % self.gds_format_boolean(self.ShowFrame, input_name='ShowFrame'))
         if self.StrengthReference is not None and 'StrengthReference' not in already_processed:
             already_processed.add('StrengthReference')
-            outfile.write(' StrengthReference=%s' % (self.gds_format_string(quote_attrib(self.StrengthReference).encode(ExternalEncoding), input_name='StrengthReference'), ))
+            outfile.write(' StrengthReference=%s' % (self.gds_format_string(quote_attrib(self.StrengthReference), input_name='StrengthReference'), ))
         if self.EntityTypeReference is not None and 'EntityTypeReference' not in already_processed:
             already_processed.add('EntityTypeReference')
-            outfile.write(' EntityTypeReference=%s' % (self.gds_format_string(quote_attrib(self.EntityTypeReference).encode(ExternalEncoding), input_name='EntityTypeReference'), ))
+            outfile.write(' EntityTypeReference=%s' % (self.gds_format_string(quote_attrib(self.EntityTypeReference), input_name='EntityTypeReference'), ))
         if self.LineColour is not None and 'LineColour' not in already_processed:
             already_processed.add('LineColour')
             outfile.write(' LineColour="%s"' % self.gds_format_integer(self.LineColour, input_name='LineColour'))
@@ -14959,7 +14959,7 @@ class OleItemStyle(GeneratedsSuper):
             outfile.write(' LineWidth="%s"' % self.gds_format_integer(self.LineWidth, input_name='LineWidth'))
         if self.Type is not None and 'Type' not in already_processed:
             already_processed.add('Type')
-            outfile.write(' Type=%s' % (self.gds_format_string(quote_attrib(self.Type).encode(ExternalEncoding), input_name='Type'), ))
+            outfile.write(' Type=%s' % (self.gds_format_string(quote_attrib(self.Type), input_name='Type'), ))
         if self.ShowAsIcon is not None and 'ShowAsIcon' not in already_processed:
             already_processed.add('ShowAsIcon')
             outfile.write(' ShowAsIcon="%s"' % self.gds_format_boolean(self.ShowAsIcon, input_name='ShowAsIcon'))
@@ -15040,14 +15040,14 @@ class OleItemStyle(GeneratedsSuper):
             already_processed.add('LineColour')
             try:
                 self.LineColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('LineWidth', node)
         if value is not None and 'LineWidth' not in already_processed:
             already_processed.add('LineWidth')
             try:
                 self.LineWidth = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Type', node)
         if value is not None and 'Type' not in already_processed:
@@ -15079,18 +15079,18 @@ class Origin(GeneratedsSuper):
     def __init__(self, EditTime=None, LastPrintDate=None, LastSaveDate=None, RevisionNumber=None, CreatedDate=None):
         self.original_tagname_ = None
         self.EditTime = _cast(int, EditTime)
-        if isinstance(LastPrintDate, basestring):
+        if isinstance(LastPrintDate, str):
             initvalue_ = datetime_.datetime.strptime(LastPrintDate, '%Y-%m-%dT%H:%M:%S')
         else:
             initvalue_ = LastPrintDate
         self.LastPrintDate = initvalue_
-        if isinstance(LastSaveDate, basestring):
+        if isinstance(LastSaveDate, str):
             initvalue_ = datetime_.datetime.strptime(LastSaveDate, '%Y-%m-%dT%H:%M:%S')
         else:
             initvalue_ = LastSaveDate
         self.LastSaveDate = initvalue_
         self.RevisionNumber = _cast(int, RevisionNumber)
-        if isinstance(CreatedDate, basestring):
+        if isinstance(CreatedDate, str):
             initvalue_ = datetime_.datetime.strptime(CreatedDate, '%Y-%m-%dT%H:%M:%S')
         else:
             initvalue_ = CreatedDate
@@ -15195,35 +15195,35 @@ class Origin(GeneratedsSuper):
             already_processed.add('EditTime')
             try:
                 self.EditTime = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('LastPrintDate', node)
         if value is not None and 'LastPrintDate' not in already_processed:
             already_processed.add('LastPrintDate')
             try:
                 self.LastPrintDate = self.gds_parse_datetime(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad date-time attribute (LastPrintDate): %s' % exp)
         value = find_attr_value_('LastSaveDate', node)
         if value is not None and 'LastSaveDate' not in already_processed:
             already_processed.add('LastSaveDate')
             try:
                 self.LastSaveDate = self.gds_parse_datetime(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad date-time attribute (LastSaveDate): %s' % exp)
         value = find_attr_value_('RevisionNumber', node)
         if value is not None and 'RevisionNumber' not in already_processed:
             already_processed.add('RevisionNumber')
             try:
                 self.RevisionNumber = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('CreatedDate', node)
         if value is not None and 'CreatedDate' not in already_processed:
             already_processed.add('CreatedDate')
             try:
                 self.CreatedDate = self.gds_parse_datetime(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad date-time attribute (CreatedDate): %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -15323,7 +15323,7 @@ class PageSettings(GeneratedsSuper):
             outfile.write(' Reduction="%s"' % self.gds_format_integer(self.Reduction, input_name='Reduction'))
         if self.PaperSizeString is not None and 'PaperSizeString' not in already_processed:
             already_processed.add('PaperSizeString')
-            outfile.write(' PaperSizeString=%s' % (self.gds_format_string(quote_attrib(self.PaperSizeString).encode(ExternalEncoding), input_name='PaperSizeString'), ))
+            outfile.write(' PaperSizeString=%s' % (self.gds_format_string(quote_attrib(self.PaperSizeString), input_name='PaperSizeString'), ))
         if self.ThemeNameWidth is not None and 'ThemeNameWidth' not in already_processed:
             already_processed.add('ThemeNameWidth')
             outfile.write(' ThemeNameWidth="%s"' % self.gds_format_integer(self.ThemeNameWidth, input_name='ThemeNameWidth'))
@@ -15398,28 +15398,28 @@ class PageSettings(GeneratedsSuper):
             already_processed.add('TopMargin')
             try:
                 self.TopMargin = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('RightMargin', node)
         if value is not None and 'RightMargin' not in already_processed:
             already_processed.add('RightMargin')
             try:
                 self.RightMargin = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('PaperSize', node)
         if value is not None and 'PaperSize' not in already_processed:
             already_processed.add('PaperSize')
             try:
                 self.PaperSize = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Reduction', node)
         if value is not None and 'Reduction' not in already_processed:
             already_processed.add('Reduction')
             try:
                 self.Reduction = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('PaperSizeString', node)
         if value is not None and 'PaperSizeString' not in already_processed:
@@ -15430,21 +15430,21 @@ class PageSettings(GeneratedsSuper):
             already_processed.add('ThemeNameWidth')
             try:
                 self.ThemeNameWidth = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('BottomMargin', node)
         if value is not None and 'BottomMargin' not in already_processed:
             already_processed.add('BottomMargin')
             try:
                 self.BottomMargin = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('LeftMargin', node)
         if value is not None and 'LeftMargin' not in already_processed:
             already_processed.add('LeftMargin')
             try:
                 self.LeftMargin = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -15519,7 +15519,7 @@ class Palette(GeneratedsSuper):
             outfile.write(' Locked="%s"' % self.gds_format_boolean(self.Locked, input_name='Locked'))
         if self.Name is not None and 'Name' not in already_processed:
             already_processed.add('Name')
-            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name).encode(ExternalEncoding), input_name='Name'), ))
+            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name), input_name='Name'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='Palette', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -15674,7 +15674,7 @@ class PaletteBar(GeneratedsSuper):
             outfile.write(' Visible="%s"' % self.gds_format_boolean(self.Visible, input_name='Visible'))
         if self.CurrentPaletteName is not None and 'CurrentPaletteName' not in already_processed:
             already_processed.add('CurrentPaletteName')
-            outfile.write(' CurrentPaletteName=%s' % (self.gds_format_string(quote_attrib(self.CurrentPaletteName).encode(ExternalEncoding), input_name='CurrentPaletteName'), ))
+            outfile.write(' CurrentPaletteName=%s' % (self.gds_format_string(quote_attrib(self.CurrentPaletteName), input_name='CurrentPaletteName'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='PaletteBar', fromsubclass_=False, pretty_print=True):
         pass
     def exportLiteral(self, outfile, level, name_='PaletteBar'):
@@ -15711,7 +15711,7 @@ class PaletteBar(GeneratedsSuper):
             already_processed.add('SplitterPosition')
             try:
                 self.SplitterPosition = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Visible', node)
         if value is not None and 'Visible' not in already_processed:
@@ -16185,7 +16185,7 @@ class PrintSettings(GeneratedsSuper):
             already_processed.add('VertPages')
             try:
                 self.VertPages = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('AssemblePages', node)
         if value is not None and 'AssemblePages' not in already_processed:
@@ -16201,14 +16201,14 @@ class PrintSettings(GeneratedsSuper):
             already_processed.add('MinExtentX')
             try:
                 self.MinExtentX = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('MinExtentY', node)
         if value is not None and 'MinExtentY' not in already_processed:
             already_processed.add('MinExtentY')
             try:
                 self.MinExtentY = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('ColourTimeBarBackground', node)
         if value is not None and 'ColourTimeBarBackground' not in already_processed:
@@ -16233,14 +16233,14 @@ class PrintSettings(GeneratedsSuper):
             already_processed.add('MaxExtentX')
             try:
                 self.MaxExtentX = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('MaxExtentY', node)
         if value is not None and 'MaxExtentY' not in already_processed:
             already_processed.add('MaxExtentY')
             try:
                 self.MaxExtentY = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('CentreChart', node)
         if value is not None and 'CentreChart' not in already_processed:
@@ -16261,7 +16261,7 @@ class PrintSettings(GeneratedsSuper):
             already_processed.add('HorzPages')
             try:
                 self.HorzPages = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('NumberPages', node)
         if value is not None and 'NumberPages' not in already_processed:
@@ -16325,7 +16325,7 @@ class Snapshot(GeneratedsSuper):
         self.Scale = _cast(float, Scale)
         self.Name = _cast(None, Name)
         self.ShowAll = _cast(bool, ShowAll)
-        if isinstance(DateTime, basestring):
+        if isinstance(DateTime, str):
             initvalue_ = datetime_.datetime.strptime(DateTime, '%Y-%m-%dT%H:%M:%S')
         else:
             initvalue_ = DateTime
@@ -16387,7 +16387,7 @@ class Snapshot(GeneratedsSuper):
             outfile.write(' Scale="%s"' % self.gds_format_double(self.Scale, input_name='Scale'))
         if self.Name is not None and 'Name' not in already_processed:
             already_processed.add('Name')
-            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name).encode(ExternalEncoding), input_name='Name'), ))
+            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name), input_name='Name'), ))
         if self.ShowAll is not None and 'ShowAll' not in already_processed:
             already_processed.add('ShowAll')
             outfile.write(' ShowAll="%s"' % self.gds_format_boolean(self.ShowAll, input_name='ShowAll'))
@@ -16402,7 +16402,7 @@ class Snapshot(GeneratedsSuper):
             outfile.write(' Y="%s"' % self.gds_format_integer(self.Y, input_name='Y'))
         if self.ViewClassId is not None and 'ViewClassId' not in already_processed:
             already_processed.add('ViewClassId')
-            outfile.write(' ViewClassId=%s' % (self.gds_format_string(quote_attrib(self.ViewClassId).encode(ExternalEncoding), input_name='ViewClassId'), ))
+            outfile.write(' ViewClassId=%s' % (self.gds_format_string(quote_attrib(self.ViewClassId), input_name='ViewClassId'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='Snapshot', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -16465,7 +16465,7 @@ class Snapshot(GeneratedsSuper):
             already_processed.add('Scale')
             try:
                 self.Scale = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (Scale): %s' % exp)
         value = find_attr_value_('Name', node)
         if value is not None and 'Name' not in already_processed:
@@ -16485,21 +16485,21 @@ class Snapshot(GeneratedsSuper):
             already_processed.add('DateTime')
             try:
                 self.DateTime = self.gds_parse_datetime(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad date-time attribute (DateTime): %s' % exp)
         value = find_attr_value_('X', node)
         if value is not None and 'X' not in already_processed:
             already_processed.add('X')
             try:
                 self.X = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Y', node)
         if value is not None and 'Y' not in already_processed:
             already_processed.add('Y')
             try:
                 self.Y = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('ViewClassId', node)
         if value is not None and 'ViewClassId' not in already_processed:
@@ -16625,7 +16625,7 @@ class SnapshotItem(GeneratedsSuper):
         self.DateSet = _cast(bool, DateSet)
         self.Ordered = _cast(bool, Ordered)
         self.Shown = _cast(bool, Shown)
-        if isinstance(DateTime, basestring):
+        if isinstance(DateTime, str):
             initvalue_ = datetime_.datetime.strptime(DateTime, '%Y-%m-%dT%H:%M:%S')
         else:
             initvalue_ = DateTime
@@ -16690,7 +16690,7 @@ class SnapshotItem(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='SnapshotItem'):
         if self.ChartItemIdReference is not None and 'ChartItemIdReference' not in already_processed:
             already_processed.add('ChartItemIdReference')
-            outfile.write(' ChartItemIdReference=%s' % (self.gds_format_string(quote_attrib(self.ChartItemIdReference).encode(ExternalEncoding), input_name='ChartItemIdReference'), ))
+            outfile.write(' ChartItemIdReference=%s' % (self.gds_format_string(quote_attrib(self.ChartItemIdReference), input_name='ChartItemIdReference'), ))
         if self.TimeSet is not None and 'TimeSet' not in already_processed:
             already_processed.add('TimeSet')
             outfile.write(' TimeSet="%s"' % self.gds_format_boolean(self.TimeSet, input_name='TimeSet'))
@@ -16829,42 +16829,42 @@ class SnapshotItem(GeneratedsSuper):
             already_processed.add('DateTime')
             try:
                 self.DateTime = self.gds_parse_datetime(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad date-time attribute (DateTime): %s' % exp)
         value = find_attr_value_('CornerId', node)
         if value is not None and 'CornerId' not in already_processed:
             already_processed.add('CornerId')
             try:
                 self.CornerId = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Width', node)
         if value is not None and 'Width' not in already_processed:
             already_processed.add('Width')
             try:
                 self.Width = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Y', node)
         if value is not None and 'Y' not in already_processed:
             already_processed.add('Y')
             try:
                 self.Y = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('X', node)
         if value is not None and 'X' not in already_processed:
             already_processed.add('X')
             try:
                 self.X = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Height', node)
         if value is not None and 'Height' not in already_processed:
             already_processed.add('Height')
             try:
                 self.Height = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -17105,10 +17105,10 @@ class Strength(GeneratedsSuper):
             outfile.write(' DotStyle=%s' % (quote_attrib(self.DotStyle), ))
         if self.Id is not None and 'Id' not in already_processed:
             already_processed.add('Id')
-            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id).encode(ExternalEncoding), input_name='Id'), ))
+            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id), input_name='Id'), ))
         if self.Name is not None and 'Name' not in already_processed:
             already_processed.add('Name')
-            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name).encode(ExternalEncoding), input_name='Name'), ))
+            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name), input_name='Name'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='Strength', fromsubclass_=False, pretty_print=True):
         pass
     def exportLiteral(self, outfile, level, name_='Strength'):
@@ -17298,10 +17298,10 @@ class String(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='String'):
         if self.Text is not None and 'Text' not in already_processed:
             already_processed.add('Text')
-            outfile.write(' Text=%s' % (self.gds_format_string(quote_attrib(self.Text).encode(ExternalEncoding), input_name='Text'), ))
+            outfile.write(' Text=%s' % (self.gds_format_string(quote_attrib(self.Text), input_name='Text'), ))
         if self.Id is not None and 'Id' not in already_processed:
             already_processed.add('Id')
-            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id).encode(ExternalEncoding), input_name='Id'), ))
+            outfile.write(' Id=%s' % (self.gds_format_string(quote_attrib(self.Id), input_name='Id'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='String', fromsubclass_=False, pretty_print=True):
         pass
     def exportLiteral(self, outfile, level, name_='String'):
@@ -17937,10 +17937,10 @@ class TextBlockStyle(GeneratedsSuper):
             outfile.write(' LineWidth="%s"' % self.gds_format_integer(self.LineWidth, input_name='LineWidth'))
         if self.StrengthReference is not None and 'StrengthReference' not in already_processed:
             already_processed.add('StrengthReference')
-            outfile.write(' StrengthReference=%s' % (self.gds_format_string(quote_attrib(self.StrengthReference).encode(ExternalEncoding), input_name='StrengthReference'), ))
+            outfile.write(' StrengthReference=%s' % (self.gds_format_string(quote_attrib(self.StrengthReference), input_name='StrengthReference'), ))
         if self.EntityTypeReference is not None and 'EntityTypeReference' not in already_processed:
             already_processed.add('EntityTypeReference')
-            outfile.write(' EntityTypeReference=%s' % (self.gds_format_string(quote_attrib(self.EntityTypeReference).encode(ExternalEncoding), input_name='EntityTypeReference'), ))
+            outfile.write(' EntityTypeReference=%s' % (self.gds_format_string(quote_attrib(self.EntityTypeReference), input_name='EntityTypeReference'), ))
         if self.FillStyle is not None and 'FillStyle' not in already_processed:
             already_processed.add('FillStyle')
             outfile.write(' FillStyle=%s' % (quote_attrib(self.FillStyle), ))
@@ -17958,13 +17958,13 @@ class TextBlockStyle(GeneratedsSuper):
             outfile.write(' Alignment=%s' % (quote_attrib(self.Alignment), ))
         if self.Strength is not None and 'Strength' not in already_processed:
             already_processed.add('Strength')
-            outfile.write(' Strength=%s' % (self.gds_format_string(quote_attrib(self.Strength).encode(ExternalEncoding), input_name='Strength'), ))
+            outfile.write(' Strength=%s' % (self.gds_format_string(quote_attrib(self.Strength), input_name='Strength'), ))
         if self.Height is not None and 'Height' not in already_processed:
             already_processed.add('Height')
             outfile.write(' Height="%s"' % self.gds_format_double(self.Height, input_name='Height'))
         if self.Type is not None and 'Type' not in already_processed:
             already_processed.add('Type')
-            outfile.write(' Type=%s' % (self.gds_format_string(quote_attrib(self.Type).encode(ExternalEncoding), input_name='Type'), ))
+            outfile.write(' Type=%s' % (self.gds_format_string(quote_attrib(self.Type), input_name='Type'), ))
         if self.Filled is not None and 'Filled' not in already_processed:
             already_processed.add('Filled')
             outfile.write(' Filled="%s"' % self.gds_format_boolean(self.Filled, input_name='Filled'))
@@ -18047,7 +18047,7 @@ class TextBlockStyle(GeneratedsSuper):
             already_processed.add('LineWidth')
             try:
                 self.LineWidth = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('StrengthReference', node)
         if value is not None and 'StrengthReference' not in already_processed:
@@ -18067,21 +18067,21 @@ class TextBlockStyle(GeneratedsSuper):
             already_processed.add('LineColour')
             try:
                 self.LineColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Width', node)
         if value is not None and 'Width' not in already_processed:
             already_processed.add('Width')
             try:
                 self.Width = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (Width): %s' % exp)
         value = find_attr_value_('BackColour', node)
         if value is not None and 'BackColour' not in already_processed:
             already_processed.add('BackColour')
             try:
                 self.BackColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Alignment', node)
         if value is not None and 'Alignment' not in already_processed:
@@ -18097,7 +18097,7 @@ class TextBlockStyle(GeneratedsSuper):
             already_processed.add('Height')
             try:
                 self.Height = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (Height): %s' % exp)
         value = find_attr_value_('Type', node)
         if value is not None and 'Type' not in already_processed:
@@ -18220,14 +18220,14 @@ class Theme(GeneratedsSuper):
             already_processed.add('TextX')
             try:
                 self.TextX = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('TextY', node)
         if value is not None and 'TextY' not in already_processed:
             already_processed.add('TextY')
             try:
                 self.TextY = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'ThemeStyle':
@@ -18293,10 +18293,10 @@ class ThemeJunctions(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ThemeJunctions'):
         if self.ThemeReference is not None and 'ThemeReference' not in already_processed:
             already_processed.add('ThemeReference')
-            outfile.write(' ThemeReference=%s' % (self.gds_format_string(quote_attrib(self.ThemeReference).encode(ExternalEncoding), input_name='ThemeReference'), ))
+            outfile.write(' ThemeReference=%s' % (self.gds_format_string(quote_attrib(self.ThemeReference), input_name='ThemeReference'), ))
         if self.ThemeId is not None and 'ThemeId' not in already_processed:
             already_processed.add('ThemeId')
-            outfile.write(' ThemeId=%s' % (self.gds_format_string(quote_attrib(self.ThemeId).encode(ExternalEncoding), input_name='ThemeId'), ))
+            outfile.write(' ThemeId=%s' % (self.gds_format_string(quote_attrib(self.ThemeId), input_name='ThemeId'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='ThemeJunctions', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -18481,7 +18481,7 @@ class ThemeStyle(GeneratedsSuper):
             outfile.write(' LeftHandTerminator=%s' % (quote_attrib(self.LeftHandTerminator), ))
         if self.Strength is not None and 'Strength' not in already_processed:
             already_processed.add('Strength')
-            outfile.write(' Strength=%s' % (self.gds_format_string(quote_attrib(self.Strength).encode(ExternalEncoding), input_name='Strength'), ))
+            outfile.write(' Strength=%s' % (self.gds_format_string(quote_attrib(self.Strength), input_name='Strength'), ))
         if self.AfterThemeIconWiring is not None and 'AfterThemeIconWiring' not in already_processed:
             already_processed.add('AfterThemeIconWiring')
             outfile.write(' AfterThemeIconWiring=%s' % (quote_attrib(self.AfterThemeIconWiring), ))
@@ -18490,10 +18490,10 @@ class ThemeStyle(GeneratedsSuper):
             outfile.write(' GoesToChartStart="%s"' % self.gds_format_boolean(self.GoesToChartStart, input_name='GoesToChartStart'))
         if self.StrengthReference is not None and 'StrengthReference' not in already_processed:
             already_processed.add('StrengthReference')
-            outfile.write(' StrengthReference=%s' % (self.gds_format_string(quote_attrib(self.StrengthReference).encode(ExternalEncoding), input_name='StrengthReference'), ))
+            outfile.write(' StrengthReference=%s' % (self.gds_format_string(quote_attrib(self.StrengthReference), input_name='StrengthReference'), ))
         if self.EntityTypeReference is not None and 'EntityTypeReference' not in already_processed:
             already_processed.add('EntityTypeReference')
-            outfile.write(' EntityTypeReference=%s' % (self.gds_format_string(quote_attrib(self.EntityTypeReference).encode(ExternalEncoding), input_name='EntityTypeReference'), ))
+            outfile.write(' EntityTypeReference=%s' % (self.gds_format_string(quote_attrib(self.EntityTypeReference), input_name='EntityTypeReference'), ))
         if self.LineColour is not None and 'LineColour' not in already_processed:
             already_processed.add('LineColour')
             outfile.write(' LineColour="%s"' % self.gds_format_integer(self.LineColour, input_name='LineColour'))
@@ -18517,7 +18517,7 @@ class ThemeStyle(GeneratedsSuper):
             outfile.write(' LineWidth="%s"' % self.gds_format_integer(self.LineWidth, input_name='LineWidth'))
         if self.Type is not None and 'Type' not in already_processed:
             already_processed.add('Type')
-            outfile.write(' Type=%s' % (self.gds_format_string(quote_attrib(self.Type).encode(ExternalEncoding), input_name='Type'), ))
+            outfile.write(' Type=%s' % (self.gds_format_string(quote_attrib(self.Type), input_name='Type'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='ThemeStyle', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -18647,7 +18647,7 @@ class ThemeStyle(GeneratedsSuper):
             already_processed.add('LineColour')
             try:
                 self.LineColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('GoesToChartEnd', node)
         if value is not None and 'GoesToChartEnd' not in already_processed:
@@ -18678,14 +18678,14 @@ class ThemeStyle(GeneratedsSuper):
             already_processed.add('IconShadingColour')
             try:
                 self.IconShadingColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('LineWidth', node)
         if value is not None and 'LineWidth' not in already_processed:
             already_processed.add('LineWidth')
             try:
                 self.LineWidth = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Type', node)
         if value is not None and 'Type' not in already_processed:
@@ -18836,14 +18836,14 @@ class TimeBar(GeneratedsSuper):
             already_processed.add('BorderLineColour')
             try:
                 self.BorderLineColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('BackColour', node)
         if value is not None and 'BackColour' not in already_processed:
             already_processed.add('BackColour')
             try:
                 self.BackColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('NewViewTimeBarVisible', node)
         if value is not None and 'NewViewTimeBarVisible' not in already_processed:
@@ -18988,7 +18988,7 @@ class TimeBarIntervalBandStyle(GeneratedsSuper):
             already_processed.add('LineColour')
             try:
                 self.LineColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Visible', node)
         if value is not None and 'Visible' not in already_processed:
@@ -19102,7 +19102,7 @@ class TimeBarMarkerBandStyle(GeneratedsSuper):
             already_processed.add('MarkerSymbolColour')
             try:
                 self.MarkerSymbolColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Visible', node)
         if value is not None and 'Visible' not in already_processed:
@@ -19118,7 +19118,7 @@ class TimeBarMarkerBandStyle(GeneratedsSuper):
             already_processed.add('OverLappingMarkerSymbolColour')
             try:
                 self.OverLappingMarkerSymbolColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -19235,7 +19235,7 @@ class TimeBarTickBandStyle(GeneratedsSuper):
             already_processed.add('LineColour')
             try:
                 self.LineColour = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('Visible', node)
         if value is not None and 'Visible' not in already_processed:
@@ -19308,7 +19308,7 @@ class TimeZone(GeneratedsSuper):
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='TimeZone'):
         if self.Name is not None and 'Name' not in already_processed:
             already_processed.add('Name')
-            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name).encode(ExternalEncoding), input_name='Name'), ))
+            outfile.write(' Name=%s' % (self.gds_format_string(quote_attrib(self.Name), input_name='Name'), ))
         if self.UniqueID is not None and 'UniqueID' not in already_processed:
             already_processed.add('UniqueID')
             outfile.write(' UniqueID="%s"' % self.gds_format_integer(self.UniqueID, input_name='UniqueID'))
@@ -19348,7 +19348,7 @@ class TimeZone(GeneratedsSuper):
             already_processed.add('UniqueID')
             try:
                 self.UniqueID = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -19407,10 +19407,10 @@ class SectorDefinition(GeneratedsSuper):
             eol_ = ''
         if self.SectorID is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sSectorID>%s</%sSectorID>%s' % (namespace_, self.gds_format_string(quote_xml(self.SectorID).encode(ExternalEncoding), input_name='SectorID'), namespace_, eol_))
+            outfile.write('<%sSectorID>%s</%sSectorID>%s' % (namespace_, self.gds_format_string(quote_xml(self.SectorID), input_name='SectorID'), namespace_, eol_))
         if self.Description is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sDescription>%s</%sDescription>%s' % (namespace_, self.gds_format_string(quote_xml(self.Description).encode(ExternalEncoding), input_name='Description'), namespace_, eol_))
+            outfile.write('<%sDescription>%s</%sDescription>%s' % (namespace_, self.gds_format_string(quote_xml(self.Description), input_name='Description'), namespace_, eol_))
     def exportLiteral(self, outfile, level, name_='SectorDefinition'):
         level += 1
         already_processed = set()
@@ -19422,10 +19422,10 @@ class SectorDefinition(GeneratedsSuper):
     def exportLiteralChildren(self, outfile, level, name_):
         if self.SectorID is not None:
             showIndent(outfile, level)
-            outfile.write('SectorID=%s,\n' % quote_python(self.SectorID).encode(ExternalEncoding))
+            outfile.write('SectorID=%s,\n' % quote_python(self.SectorID))
         if self.Description is not None:
             showIndent(outfile, level)
-            outfile.write('Description=%s,\n' % quote_python(self.Description).encode(ExternalEncoding))
+            outfile.write('Description=%s,\n' % quote_python(self.Description))
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -19513,13 +19513,13 @@ class DocumentationType(GeneratedsSuper):
             eol_ = ''
         if self.Rationale is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sRationale>%s</%sRationale>%s' % (namespace_, self.gds_format_string(quote_xml(self.Rationale).encode(ExternalEncoding), input_name='Rationale'), namespace_, eol_))
+            outfile.write('<%sRationale>%s</%sRationale>%s' % (namespace_, self.gds_format_string(quote_xml(self.Rationale), input_name='Rationale'), namespace_, eol_))
         for Synonym_ in self.Synonym:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sSynonym>%s</%sSynonym>%s' % (namespace_, self.gds_format_string(quote_xml(Synonym_).encode(ExternalEncoding), input_name='Synonym'), namespace_, eol_))
+            outfile.write('<%sSynonym>%s</%sSynonym>%s' % (namespace_, self.gds_format_string(quote_xml(Synonym_), input_name='Synonym'), namespace_, eol_))
         if self.Description is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sDescription>%s</%sDescription>%s' % (namespace_, self.gds_format_string(quote_xml(self.Description).encode(ExternalEncoding), input_name='Description'), namespace_, eol_))
+            outfile.write('<%sDescription>%s</%sDescription>%s' % (namespace_, self.gds_format_string(quote_xml(self.Description), input_name='Description'), namespace_, eol_))
     def exportLiteral(self, outfile, level, name_='DocumentationType'):
         level += 1
         already_processed = set()
@@ -19534,19 +19534,19 @@ class DocumentationType(GeneratedsSuper):
     def exportLiteralChildren(self, outfile, level, name_):
         if self.Rationale is not None:
             showIndent(outfile, level)
-            outfile.write('Rationale=%s,\n' % quote_python(self.Rationale).encode(ExternalEncoding))
+            outfile.write('Rationale=%s,\n' % quote_python(self.Rationale))
         showIndent(outfile, level)
         outfile.write('Synonym=[\n')
         level += 1
         for Synonym_ in self.Synonym:
             showIndent(outfile, level)
-            outfile.write('%s,\n' % quote_python(Synonym_).encode(ExternalEncoding))
+            outfile.write('%s,\n' % quote_python(Synonym_))
         level -= 1
         showIndent(outfile, level)
         outfile.write('],\n')
         if self.Description is not None:
             showIndent(outfile, level)
-            outfile.write('Description=%s,\n' % quote_python(self.Description).encode(ExternalEncoding))
+            outfile.write('Description=%s,\n' % quote_python(self.Description))
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -19627,10 +19627,10 @@ class SimpleDocumentationType(GeneratedsSuper):
             eol_ = ''
         if self.Rationale is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sRationale>%s</%sRationale>%s' % (namespace_, self.gds_format_string(quote_xml(self.Rationale).encode(ExternalEncoding), input_name='Rationale'), namespace_, eol_))
+            outfile.write('<%sRationale>%s</%sRationale>%s' % (namespace_, self.gds_format_string(quote_xml(self.Rationale), input_name='Rationale'), namespace_, eol_))
         if self.Description is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sDescription>%s</%sDescription>%s' % (namespace_, self.gds_format_string(quote_xml(self.Description).encode(ExternalEncoding), input_name='Description'), namespace_, eol_))
+            outfile.write('<%sDescription>%s</%sDescription>%s' % (namespace_, self.gds_format_string(quote_xml(self.Description), input_name='Description'), namespace_, eol_))
     def exportLiteral(self, outfile, level, name_='SimpleDocumentationType'):
         level += 1
         already_processed = set()
@@ -19642,10 +19642,10 @@ class SimpleDocumentationType(GeneratedsSuper):
     def exportLiteralChildren(self, outfile, level, name_):
         if self.Rationale is not None:
             showIndent(outfile, level)
-            outfile.write('Rationale=%s,\n' % quote_python(self.Rationale).encode(ExternalEncoding))
+            outfile.write('Rationale=%s,\n' % quote_python(self.Rationale))
         if self.Description is not None:
             showIndent(outfile, level)
-            outfile.write('Description=%s,\n' % quote_python(self.Description).encode(ExternalEncoding))
+            outfile.write('Description=%s,\n' % quote_python(self.Description))
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -20057,15 +20057,15 @@ class TypeType(GeneratedsSuper):
             eol_ = ''
         if self.TypeName is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sTypeName>%s</%sTypeName>%s' % (namespace_, self.gds_format_string(quote_xml(self.TypeName).encode(ExternalEncoding), input_name='TypeName'), namespace_, eol_))
+            outfile.write('<%sTypeName>%s</%sTypeName>%s' % (namespace_, self.gds_format_string(quote_xml(self.TypeName), input_name='TypeName'), namespace_, eol_))
         for ImageFile_ in self.ImageFile:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sImageFile>%s</%sImageFile>%s' % (namespace_, self.gds_format_string(quote_xml(ImageFile_).encode(ExternalEncoding), input_name='ImageFile'), namespace_, eol_))
+            outfile.write('<%sImageFile>%s</%sImageFile>%s' % (namespace_, self.gds_format_string(quote_xml(ImageFile_), input_name='ImageFile'), namespace_, eol_))
         for LNMapping_ in self.LNMapping:
             LNMapping_.export(outfile, level, namespace_, name_='LNMapping', pretty_print=pretty_print)
         for Sector_ in self.Sector:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sSector>%s</%sSector>%s' % (namespace_, self.gds_format_string(quote_xml(Sector_).encode(ExternalEncoding), input_name='Sector'), namespace_, eol_))
+            outfile.write('<%sSector>%s</%sSector>%s' % (namespace_, self.gds_format_string(quote_xml(Sector_), input_name='Sector'), namespace_, eol_))
         if self.Documentation is not None:
             self.Documentation.export(outfile, level, namespace_, name_='Documentation', pretty_print=pretty_print)
     def exportLiteral(self, outfile, level, name_='TypeType'):
@@ -20094,13 +20094,13 @@ class TypeType(GeneratedsSuper):
     def exportLiteralChildren(self, outfile, level, name_):
         if self.TypeName is not None:
             showIndent(outfile, level)
-            outfile.write('TypeName=%s,\n' % quote_python(self.TypeName).encode(ExternalEncoding))
+            outfile.write('TypeName=%s,\n' % quote_python(self.TypeName))
         showIndent(outfile, level)
         outfile.write('ImageFile=[\n')
         level += 1
         for ImageFile_ in self.ImageFile:
             showIndent(outfile, level)
-            outfile.write('%s,\n' % quote_python(ImageFile_).encode(ExternalEncoding))
+            outfile.write('%s,\n' % quote_python(ImageFile_))
         level -= 1
         showIndent(outfile, level)
         outfile.write('],\n')
@@ -20121,7 +20121,7 @@ class TypeType(GeneratedsSuper):
         level += 1
         for Sector_ in self.Sector:
             showIndent(outfile, level)
-            outfile.write('%s,\n' % quote_python(Sector_).encode(ExternalEncoding))
+            outfile.write('%s,\n' % quote_python(Sector_))
         level -= 1
         showIndent(outfile, level)
         outfile.write('],\n')
@@ -20299,7 +20299,7 @@ class PropertyType(GeneratedsSuper):
             eol_ = ''
         if self.PropertyName is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sPropertyName>%s</%sPropertyName>%s' % (namespace_, self.gds_format_string(quote_xml(self.PropertyName).encode(ExternalEncoding), input_name='PropertyName'), namespace_, eol_))
+            outfile.write('<%sPropertyName>%s</%sPropertyName>%s' % (namespace_, self.gds_format_string(quote_xml(self.PropertyName), input_name='PropertyName'), namespace_, eol_))
         for RelatedType_ in self.RelatedType:
             RelatedType_.export(outfile, level, namespace_, name_='RelatedType', pretty_print=pretty_print)
         for UnrelatedType_ in self.UnrelatedType:
@@ -20310,7 +20310,7 @@ class PropertyType(GeneratedsSuper):
             UnrelatedForm_.export(outfile, level, namespace_, name_='UnrelatedForm', pretty_print=pretty_print)
         for Sector_ in self.Sector:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sSector>%s</%sSector>%s' % (namespace_, self.gds_format_string(quote_xml(Sector_).encode(ExternalEncoding), input_name='Sector'), namespace_, eol_))
+            outfile.write('<%sSector>%s</%sSector>%s' % (namespace_, self.gds_format_string(quote_xml(Sector_), input_name='Sector'), namespace_, eol_))
         if self.Documentation is not None:
             self.Documentation.export(outfile, level, namespace_, name_='Documentation', pretty_print=pretty_print)
     def exportLiteral(self, outfile, level, name_='PropertyType'):
@@ -20335,7 +20335,7 @@ class PropertyType(GeneratedsSuper):
     def exportLiteralChildren(self, outfile, level, name_):
         if self.PropertyName is not None:
             showIndent(outfile, level)
-            outfile.write('PropertyName=%s,\n' % quote_python(self.PropertyName).encode(ExternalEncoding))
+            outfile.write('PropertyName=%s,\n' % quote_python(self.PropertyName))
         showIndent(outfile, level)
         outfile.write('RelatedType=[\n')
         level += 1
@@ -20389,7 +20389,7 @@ class PropertyType(GeneratedsSuper):
         level += 1
         for Sector_ in self.Sector:
             showIndent(outfile, level)
-            outfile.write('%s,\n' % quote_python(Sector_).encode(ExternalEncoding))
+            outfile.write('%s,\n' % quote_python(Sector_))
         level -= 1
         showIndent(outfile, level)
         outfile.write('],\n')
@@ -20542,10 +20542,10 @@ class FormType(GeneratedsSuper):
             eol_ = ''
         if self.FormName is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sFormName>%s</%sFormName>%s' % (namespace_, self.gds_format_string(quote_xml(self.FormName).encode(ExternalEncoding), input_name='FormName'), namespace_, eol_))
+            outfile.write('<%sFormName>%s</%sFormName>%s' % (namespace_, self.gds_format_string(quote_xml(self.FormName), input_name='FormName'), namespace_, eol_))
         if self.baseForm is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sbaseForm>%s</%sbaseForm>%s' % (namespace_, self.gds_format_string(quote_xml(self.baseForm).encode(ExternalEncoding), input_name='baseForm'), namespace_, eol_))
+            outfile.write('<%sbaseForm>%s</%sbaseForm>%s' % (namespace_, self.gds_format_string(quote_xml(self.baseForm), input_name='baseForm'), namespace_, eol_))
         if self.formatters is not None:
             self.formatters.export(outfile, level, namespace_, name_='formatters', pretty_print=pretty_print)
         if self.Documentation is not None:
@@ -20572,10 +20572,10 @@ class FormType(GeneratedsSuper):
     def exportLiteralChildren(self, outfile, level, name_):
         if self.FormName is not None:
             showIndent(outfile, level)
-            outfile.write('FormName=%s,\n' % quote_python(self.FormName).encode(ExternalEncoding))
+            outfile.write('FormName=%s,\n' % quote_python(self.FormName))
         if self.baseForm is not None:
             showIndent(outfile, level)
-            outfile.write('baseForm=%s,\n' % quote_python(self.baseForm).encode(ExternalEncoding))
+            outfile.write('baseForm=%s,\n' % quote_python(self.baseForm))
         if self.formatters is not None:
             showIndent(outfile, level)
             outfile.write('formatters=model_.formattersType(\n')
@@ -20691,7 +20691,7 @@ class DomainType(GeneratedsSuper):
             eol_ = ''
         for Unit_ in self.Unit:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sUnit>%s</%sUnit>%s' % (namespace_, self.gds_format_string(quote_xml(Unit_).encode(ExternalEncoding), input_name='Unit'), namespace_, eol_))
+            outfile.write('<%sUnit>%s</%sUnit>%s' % (namespace_, self.gds_format_string(quote_xml(Unit_), input_name='Unit'), namespace_, eol_))
     def exportLiteral(self, outfile, level, name_='DomainType'):
         level += 1
         already_processed = set()
@@ -20709,7 +20709,7 @@ class DomainType(GeneratedsSuper):
         level += 1
         for Unit_ in self.Unit:
             showIndent(outfile, level)
-            outfile.write('%s,\n' % quote_python(Unit_).encode(ExternalEncoding))
+            outfile.write('%s,\n' % quote_python(Unit_))
         level -= 1
         showIndent(outfile, level)
         outfile.write('],\n')
@@ -20792,10 +20792,10 @@ class LNMappingType(GeneratedsSuper):
             eol_ = ''
         if self.IconFile is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sIconFile>%s</%sIconFile>%s' % (namespace_, self.gds_format_string(quote_xml(self.IconFile).encode(ExternalEncoding), input_name='IconFile'), namespace_, eol_))
+            outfile.write('<%sIconFile>%s</%sIconFile>%s' % (namespace_, self.gds_format_string(quote_xml(self.IconFile), input_name='IconFile'), namespace_, eol_))
         if self.TypeName is not None:
             showIndent(outfile, level, pretty_print)
-            outfile.write('<%sTypeName>%s</%sTypeName>%s' % (namespace_, self.gds_format_string(quote_xml(self.TypeName).encode(ExternalEncoding), input_name='TypeName'), namespace_, eol_))
+            outfile.write('<%sTypeName>%s</%sTypeName>%s' % (namespace_, self.gds_format_string(quote_xml(self.TypeName), input_name='TypeName'), namespace_, eol_))
     def exportLiteral(self, outfile, level, name_='LNMappingType'):
         level += 1
         already_processed = set()
@@ -20810,10 +20810,10 @@ class LNMappingType(GeneratedsSuper):
     def exportLiteralChildren(self, outfile, level, name_):
         if self.IconFile is not None:
             showIndent(outfile, level)
-            outfile.write('IconFile=%s,\n' % quote_python(self.IconFile).encode(ExternalEncoding))
+            outfile.write('IconFile=%s,\n' % quote_python(self.IconFile))
         if self.TypeName is not None:
             showIndent(outfile, level)
-            outfile.write('TypeName=%s,\n' % quote_python(self.TypeName).encode(ExternalEncoding))
+            outfile.write('TypeName=%s,\n' % quote_python(self.TypeName))
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -21264,7 +21264,7 @@ class formatterType(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='formatterType')
         if self.hasContent_():
             outfile.write('>')
-            outfile.write(str(self.valueOf_).encode(ExternalEncoding))
+            outfile.write(str(self.valueOf_))
             self.exportChildren(outfile, level + 1, namespace_='', name_='formatterType', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -21330,7 +21330,7 @@ Usage: python <Parser>.py [ -s ] <in_xml_file>
 
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(1)
 
 
@@ -21386,7 +21386,7 @@ def parseEtree(inFileName, silence=False):
 
 
 def parseString(inString, silence=False):
-    from StringIO import StringIO
+    from io import StringIO
     doc = parsexml_(StringIO(inString))
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
